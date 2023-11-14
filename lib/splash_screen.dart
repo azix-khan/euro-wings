@@ -11,12 +11,14 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: const Column(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          CircleAvatar(
-            backgroundImage: AssetImage('images/logo.jpg'),
+          Container(
+            height: 100,
+            width: 200,
+            child: Image.asset('images/logo.jpg'),
           ),
           Center(
             child: Text('Euro Wings'),
