@@ -1,4 +1,4 @@
-import 'package:euro_wings/splash_screen.dart';
+import 'package:euro_wings/views/splash_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
