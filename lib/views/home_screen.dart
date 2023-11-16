@@ -35,17 +35,32 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(right: 51, left: 51, top: 36),
-            child: TextFormField(
-                controller: searchController,
-                decoration: InputDecoration(
-                  hintText: 'Search',
-                  fillColor: Colors.grey,
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20)),
-                )),
+          Row(
+            children: [
+              Container(
+                height: 100,
+                width: 100,
+                color: Colors.black,
+              ),
+              Container(
+                height: 100,
+                width: 100,
+                color: Colors.amber,
+              ),
+              Container(
+                height: 100,
+                width: 100,
+                color: Colors.green,
+              ),
+              Container(
+                height: 100,
+                width: 100,
+                color: Colors.red,
+              ),
+            ],
           )
         ],
       ),
