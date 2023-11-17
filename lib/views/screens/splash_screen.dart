@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:euro_wings/utils/colors.dart';
 import 'package:euro_wings/utils/custom_button.dart';
-import 'package:euro_wings/views/home_screen.dart';
+import 'package:euro_wings/views/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {

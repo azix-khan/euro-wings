@@ -1,5 +1,4 @@
-import 'package:euro_wings/views/optionFood.dart';
-import 'package:euro_wings/views/splash_screen.dart';
+import 'package:euro_wings/views/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -19,7 +18,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: OptionsFoods(),
+      home: const HomeScreen(),
     );
   }
 }

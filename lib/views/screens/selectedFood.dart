@@ -1,9 +1,9 @@
 import 'package:euro_wings/utils/customNavigation.dart';
 import 'package:euro_wings/utils/tiles.dart';
-import 'package:euro_wings/views/payFood.dart';
+import 'package:euro_wings/views/screens/payFood.dart';
 import 'package:flutter/material.dart';
 //
-import '../utils/themes.dart';
+import '../../utils/themes.dart';
 
 class SelectedFoodScreen extends StatelessWidget {
   final List<_Categories> categories = [
