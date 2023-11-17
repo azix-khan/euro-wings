@@ -1,6 +1,6 @@
-import 'package:euro_wings/utils/customNavigation.dart';
-import 'package:euro_wings/utils/more_menu_button.dart';
-import 'package:euro_wings/utils/themes.dart';
+import 'package:euro_wings/views/custom_widgets/customNavigation.dart';
+import 'package:euro_wings/views/custom_widgets/more_menu_button.dart';
+import 'package:euro_wings/constants/themes.dart';
 import 'package:euro_wings/views/custom_widgets/menu_list.dart';
 import 'package:euro_wings/views/custom_widgets/slogan.dart';
 import 'package:flutter/material.dart';

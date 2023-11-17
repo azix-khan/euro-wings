@@ -1,4 +1,4 @@
-import 'package:euro_wings/utils/menu.dart';
+import 'package:euro_wings/views/custom_widgets/menu.dart';
 import 'package:flutter/material.dart';
 
 class MenuList extends StatelessWidget {

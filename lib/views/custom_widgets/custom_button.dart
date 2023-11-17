@@ -1,4 +1,4 @@
-import 'package:euro_wings/utils/colors.dart';
+import 'package:euro_wings/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {

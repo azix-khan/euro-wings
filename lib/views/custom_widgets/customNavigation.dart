@@ -1,4 +1,4 @@
-import 'package:euro_wings/utils/themes.dart';
+import 'package:euro_wings/constants/themes.dart';
 import 'package:flutter/material.dart';
 
 class CustomNavigatorBar extends StatelessWidget {

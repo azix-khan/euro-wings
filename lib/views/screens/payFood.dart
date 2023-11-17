@@ -1,6 +1,6 @@
-import 'package:euro_wings/utils/customNavigation.dart';
-import 'package:euro_wings/utils/themes.dart';
-import 'package:euro_wings/utils/tiles.dart';
+import 'package:euro_wings/views/custom_widgets/customNavigation.dart';
+import 'package:euro_wings/constants/themes.dart';
+import 'package:euro_wings/views/custom_widgets/tiles.dart';
 import 'package:flutter/material.dart';
 
 class PayFoodScreen extends StatelessWidget {

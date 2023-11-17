@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:euro_wings/utils/colors.dart';
-import 'package:euro_wings/utils/custom_button.dart';
+import 'package:euro_wings/constants/colors.dart';
+import 'package:euro_wings/views/custom_widgets/custom_button.dart';
 import 'package:euro_wings/views/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 

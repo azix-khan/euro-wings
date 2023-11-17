@@ -1,9 +1,9 @@
-import 'package:euro_wings/utils/customNavigation.dart';
-import 'package:euro_wings/utils/tiles.dart';
+import 'package:euro_wings/views/custom_widgets/customNavigation.dart';
+import 'package:euro_wings/views/custom_widgets/tiles.dart';
 import 'package:euro_wings/views/screens/payFood.dart';
 import 'package:flutter/material.dart';
 //
-import '../../utils/themes.dart';
+import '../../constants/themes.dart';
 
 class SelectedFoodScreen extends StatelessWidget {
   final List<_Categories> categories = [
@@ -11,13 +11,15 @@ class SelectedFoodScreen extends StatelessWidget {
     _Categories('Chicken Spicy Burger', 'Ala carte', '320 LKR'),
   ];
 
+  SelectedFoodScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: true,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: primary),
+          icon: const Icon(Icons.arrow_back_ios, color: primary),
           onPressed: () => Navigator.pop(context),
         ),
         title: const Column(
@@ -37,7 +39,7 @@ class SelectedFoodScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.shopping_cart_outlined, color: primary),
+            icon: const Icon(Icons.shopping_cart_outlined, color: primary),
             onPressed: () {},
           ),
         ],
@@ -59,7 +61,7 @@ class SelectedFoodScreen extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: CustomNavigatorBar(),
+      bottomNavigationBar: const CustomNavigatorBar(),
     );
   }
 }
@@ -122,8 +124,8 @@ class _CategoriesFood extends StatelessWidget {
               ),
               const Spacer(),
               Text(this.calories,
-                  style:
-                      TextStyle(color: primary, fontWeight: FontWeight.bold)),
+                  style: const TextStyle(
+                      color: primary, fontWeight: FontWeight.bold)),
               const SizedBox(width: 15),
               Container(
                 width: 25,
