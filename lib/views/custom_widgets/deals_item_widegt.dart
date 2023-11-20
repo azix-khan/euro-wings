@@ -1,19 +1,26 @@
-import 'package:euro_wings/views/screens/selectedFood.dart';
-import 'package:flutter/material.dart';
+// deal_item.dart
 
-class Menu extends StatelessWidget {
-  final String description;
-  final String image;
-  const Menu(this.description, this.image, {super.key});
+import 'package:euro_wings/Models/deals_model.dart';
+import 'package:euro_wings/views/screens/selected_deal_screen.dart';
+import 'package:flutter/material.dart';
+// import 'deal_model.dart'; // Import the Deal model
+// import 'selected_deal_screen.dart'; // Import the screen to navigate to when a deal is selected
+
+class DealItem extends StatelessWidget {
+  final Deal deal;
+
+  DealItem({required this.deal});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (BuildContext context) => SelectedFoodScreen()));
+          context,
+          MaterialPageRoute(
+            builder: (context) => SelectedDealScreen(deal: deal),
+          ),
+        );
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -31,21 +38,20 @@ class Menu extends StatelessWidget {
           ),
           child: Column(
             children: [
-              // IMAGEN :
               Container(
                 alignment: Alignment.center,
                 width: double.infinity,
                 height: 125,
-                child: Image.asset(image),
+                child: Image.asset(deal.image),
               ),
               const SizedBox(height: 20),
-              // DESCRIPTION :
               Text(
-                description,
+                deal.name,
                 style: const TextStyle(
-                    fontWeight: FontWeight.w300,
-                    fontSize: 15,
-                    color: Colors.black),
+                  fontWeight: FontWeight.w300,
+                  fontSize: 15,
+                  color: Colors.black,
+                ),
               ),
             ],
           ),

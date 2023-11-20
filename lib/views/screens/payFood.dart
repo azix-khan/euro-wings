@@ -23,12 +23,12 @@ class PayFoodScreen extends StatelessWidget {
         title: const Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('BURGER',
+            Text('EURO',
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                     color: Colors.black)),
-            Text('C I T Y',
+            Text('W I N G S',
                 style: TextStyle(
                     fontWeight: FontWeight.w400,
                     fontSize: 10,

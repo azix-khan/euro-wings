@@ -10,6 +10,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.sizeOf(context).height * 1;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -50,9 +51,9 @@ class HomeScreen extends StatelessWidget {
           Slogan(Colors.blueGrey.shade900,
               'T R A D I T I O N A L - R E C I P I E', 'Affordable Bills'),
           // Tables Food :
-          const Expanded(
+          Expanded(
             child: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               // Menu List
               child: MenuList(),
             ),
