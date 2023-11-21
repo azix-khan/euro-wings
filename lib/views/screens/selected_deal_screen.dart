@@ -2,18 +2,17 @@
 
 import 'package:euro_wings/Models/deals_model.dart';
 import 'package:flutter/material.dart';
-// import 'deal_model.dart'; // Import the Deal model
 
 class SelectedDealScreen extends StatelessWidget {
   final Deal deal;
 
-  SelectedDealScreen({required this.deal});
+  const SelectedDealScreen({super.key, required this.deal});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Selected Deal'),
+        title: const Text('Selected Deal'),
       ),
       body: Column(
         children: [

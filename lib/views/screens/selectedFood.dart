@@ -1,17 +1,73 @@
+import 'package:euro_wings/Models/categories_model.dart';
+import 'package:euro_wings/Models/menu_model.dart';
 import 'package:euro_wings/views/custom_widgets/customNavigation.dart';
 import 'package:euro_wings/views/custom_widgets/tiles.dart';
-import 'package:euro_wings/views/screens/payFood.dart';
+import 'package:euro_wings/views/screens/categories_item_widget.dart';
 import 'package:flutter/material.dart';
-//
+
 import '../../constants/themes.dart';
 
-class SelectedFoodScreen extends StatelessWidget {
-  final List<_Categories> categories = [
-    _Categories('Chicken Big Burger', 'Ala carte', '380 LKR'),
-    _Categories('Chicken Spicy Burger', 'Ala carte', '320 LKR'),
-  ];
+class SelectedFoodScreen extends StatefulWidget {
+  final Menu menu;
 
-  SelectedFoodScreen({super.key});
+  SelectedFoodScreen({
+    Key? key,
+    required this.menu,
+  }) : super(key: key);
+
+  @override
+  State<SelectedFoodScreen> createState() => _SelectedFoodScreenState();
+}
+
+class _SelectedFoodScreenState extends State<SelectedFoodScreen> {
+  final List<Categories> categories = [
+    Categories(
+        id: 1,
+        title: 'Euro Special Burger',
+        subtitle: "Ala carte",
+        price: '649 RS'),
+    Categories(
+        id: 1, title: 'Student Burger', subtitle: "Ala carte", price: '200 RS'),
+    Categories(
+        id: 1, title: 'Zinger Burger', subtitle: "Ala carte", price: '349 Rs'),
+    Categories(
+        id: 1,
+        title: 'Zinger Stacker Burger',
+        subtitle: "Ala carte",
+        price: '449 RS'),
+    Categories(
+        id: 1,
+        title: 'Double Decker Burger',
+        subtitle: "Ala carte",
+        price: '449 RS'),
+    Categories(
+        id: 1, title: 'Tower Burger', subtitle: "Ala carte", price: '599 RS'),
+    Categories(
+        id: 2,
+        title: 'Chicken Grill Burger',
+        subtitle: "Ala carte",
+        price: '399'),
+    Categories(
+        id: 2,
+        title: 'Milde Chicken Burger',
+        subtitle: "Ala carte",
+        price: '449 Rs'),
+    Categories(
+        id: 4, title: 'Hot Burger', subtitle: "Ala carte", price: '380 LKR'),
+    Categories(
+        id: 4, title: 'Hot Burger', subtitle: "Ala carte", price: '380 LKR'),
+    Categories(
+        id: 4, title: 'Hot Burger', subtitle: "Ala carte", price: '380 LKR'),
+  ];
+  List<Categories> updateCat = [];
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      updateCat =
+          categories.where((element) => element.id == widget.menu.id).toList();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,109 +102,30 @@ class SelectedFoodScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          // TITULO :
-          const Titles('Chicken Burgers', 'Please select your burger type'),
-          // IMAGEN :
-          _ImagenCustom(),
-          // ACCESORIO :
+          // TITLE :
+          Titles(widget.menu.title,
+              'Please select your ${widget.menu.title} type'),
+          // IMAGE :
+          SizedBox(
+            width: double.infinity,
+            height: 240,
+            child: Image.asset(widget.menu.image),
+          ),
+          // TYPE SELECTION :
           Expanded(
             child: ListView.separated(
-                physics: const BouncingScrollPhysics(),
-                itemBuilder: (_, i) => _CategoriesFood(categories[i].subtitulo,
-                    categories[i].titulo, categories[i].calories),
-                separatorBuilder: (_, i) => const SizedBox(height: 15),
-                itemCount: categories.length),
+              physics: const BouncingScrollPhysics(),
+              itemBuilder: (_, i) => CategoriesFood(
+                categories: updateCat[i],
+                title: 'title',
+              ),
+              separatorBuilder: (_, i) => const SizedBox(height: 15),
+              itemCount: updateCat.length,
+            ),
           ),
         ],
       ),
       bottomNavigationBar: const CustomNavigatorBar(),
     );
   }
-}
-
-class _ImagenCustom extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: 240,
-      child: Image.asset('images/3-hamburguesas.png'),
-    );
-  }
-}
-
-class _CategoriesFood extends StatelessWidget {
-  final String titulo;
-  final String subtitulo;
-  final String calories;
-
-  const _CategoriesFood(this.titulo, this.subtitulo, this.calories);
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (_) => PayFoodScreen()));
-      },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Container(
-          width: double.infinity,
-          height: 100,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: [
-              const BoxShadow(
-                color: Colors.black12,
-                blurRadius: 10,
-              ),
-            ],
-          ),
-          child: Row(
-            children: [
-              const SizedBox(width: 20),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(this.subtitulo,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 16)),
-                  Text(this.titulo,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.grey.shade500)),
-                ],
-              ),
-              const Spacer(),
-              Text(this.calories,
-                  style: const TextStyle(
-                      color: primary, fontWeight: FontWeight.bold)),
-              const SizedBox(width: 15),
-              Container(
-                width: 25,
-                height: 25,
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade200,
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(Icons.arrow_right_rounded, size: 25),
-              ),
-              const SizedBox(width: 15),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _Categories {
-  final String titulo;
-  final String subtitulo;
-  final String calories;
-
-  _Categories(this.titulo, this.subtitulo, this.calories);
 }

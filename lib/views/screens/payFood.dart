@@ -17,7 +17,7 @@ class PayFoodScreen extends StatelessWidget {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: primary),
+          icon: const Icon(Icons.arrow_back_ios, color: primary),
           onPressed: () => Navigator.pop(context),
         ),
         title: const Column(
@@ -37,7 +37,7 @@ class PayFoodScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.shopping_cart_outlined, color: primary),
+            icon: const Icon(Icons.shopping_cart_outlined, color: primary),
             onPressed: () {},
           ),
         ],
@@ -73,7 +73,7 @@ class PayFoodScreen extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: CustomNavigatorBar(),
+      bottomNavigationBar: const CustomNavigatorBar(),
     );
   }
 }
@@ -125,8 +125,8 @@ class __BottomSelectNumberState extends State<_BottomSelectNumber> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          const BoxShadow(
+        boxShadow: const [
+          BoxShadow(
             color: Colors.black26,
             blurRadius: 8,
           ),
@@ -156,7 +156,7 @@ class __BottomSelectNumberState extends State<_BottomSelectNumber> {
             ),
           ),
           // numero :
-          Text('${this.count}', style: const TextStyle(fontSize: 18)),
+          Text('${count}', style: const TextStyle(fontSize: 18)),
           // mas :
           GestureDetector(
             onTap: () {
@@ -189,8 +189,8 @@ class _BottomAddToCart extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.orange,
         borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          const BoxShadow(
+        boxShadow: const [
+          BoxShadow(
             color: Colors.black26,
             blurRadius: 8,
           ),
@@ -220,8 +220,8 @@ class _IncludesExtraFood extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
-          boxShadow: [
-            const BoxShadow(
+          boxShadow: const [
+            BoxShadow(
               color: Colors.black26,
               blurRadius: 8,
             ),
@@ -234,11 +234,11 @@ class _IncludesExtraFood extends StatelessWidget {
             Container(
               width: 70,
               height: 70,
-              child: Image.asset(this.image),
+              child: Image.asset(image),
             ),
             // NAME :
             const SizedBox(width: 15),
-            Text(this.article,
+            Text(article,
                 style:
                     const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
             const Spacer(),

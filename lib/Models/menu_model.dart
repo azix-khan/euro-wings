@@ -1,11 +1,13 @@
 // menu_model.dart
 
 class Menu {
-  final String description;
+  final int id;
+  final String title;
   final String image;
 
   Menu({
-    required this.description,
+    required this.id,
+    required this.title,
     required this.image,
   });
 }

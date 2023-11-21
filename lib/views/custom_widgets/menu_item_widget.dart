@@ -14,7 +14,9 @@ class MenuItems extends StatelessWidget {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (BuildContext context) => SelectedFoodScreen()));
+                builder: (BuildContext context) => SelectedFoodScreen(
+                      menu: menu,
+                    )));
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -42,7 +44,7 @@ class MenuItems extends StatelessWidget {
               const SizedBox(height: 20),
               // DESCRIPTION :
               Text(
-                menu.description,
+                menu.title,
                 style: const TextStyle(
                     fontWeight: FontWeight.w300,
                     fontSize: 15,

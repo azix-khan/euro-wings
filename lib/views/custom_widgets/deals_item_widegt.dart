@@ -3,13 +3,11 @@
 import 'package:euro_wings/Models/deals_model.dart';
 import 'package:euro_wings/views/screens/selected_deal_screen.dart';
 import 'package:flutter/material.dart';
-// import 'deal_model.dart'; // Import the Deal model
-// import 'selected_deal_screen.dart'; // Import the screen to navigate to when a deal is selected
 
 class DealItem extends StatelessWidget {
   final Deal deal;
 
-  DealItem({required this.deal});
+  const DealItem({super.key, required this.deal});
 
   @override
   Widget build(BuildContext context) {
