@@ -10,7 +10,7 @@ import '../../constants/themes.dart';
 class SelectedFoodScreen extends StatefulWidget {
   final Menu menu;
 
-  SelectedFoodScreen({
+  const SelectedFoodScreen({
     Key? key,
     required this.menu,
   }) : super(key: key);
