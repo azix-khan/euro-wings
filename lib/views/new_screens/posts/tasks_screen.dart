@@ -2,8 +2,9 @@ import 'package:euro_wings/views/new_screens/auth/login_screen.dart';
 import 'package:euro_wings/views/new_screens/posts/add_task_screen.dart';
 import 'package:euro_wings/views/new_screens/widgets/utils/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 
 class TasksScreen extends StatefulWidget {
   const TasksScreen({Key? key}) : super(key: key);
@@ -19,7 +20,7 @@ class _TasksScreenState extends State<TasksScreen> {
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
-    final tasksCollection = FirebaseFirestore.instance.collection('tasks');
+    final tasksCollection = FirebaseFirestore.instance.collection('foodItems');
 
     return Scaffold(
       appBar: AppBar(
@@ -99,7 +100,7 @@ class _TasksScreenState extends State<TasksScreen> {
                   }
                   if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
                     return const Center(
-                      child: Text('No tasks found.'),
+                      child: Text('No Item found.'),
                     );
                   }
                   final tasks = snapshot.data!.docs;
@@ -108,6 +109,14 @@ class _TasksScreenState extends State<TasksScreen> {
                     itemCount: tasks.length,
                     itemBuilder: (context, index) {
                       final title = tasks[index]['title'].toString();
+                      final name = tasks[index]['name'].toString();
+                      final description =
+                          tasks[index]['description'].toString();
+                      final price = tasks[index]['price'].toString();
+                      final imageReference = tasks[index]['image'] != null
+                          ? tasks[index]['image'].toString()
+                          : '';
+
                       if (searchFilter.text.isEmpty ||
                           title.toLowerCase().contains(
                                 searchFilter.text.toLowerCase(),
@@ -135,12 +144,64 @@ class _TasksScreenState extends State<TasksScreen> {
                                 ),
                                 child: Container(
                                   padding: const EdgeInsets.all(16.0),
-                                  child: Text(
-                                    title,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                    ),
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        title,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                      Text(
+                                        name,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                      Text(
+                                        description,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                      Text(
+                                        price,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                      Container(
+                                        height: 100,
+                                        width: 100,
+                                        child: imageReference.isNotEmpty
+                                            ? FutureBuilder(
+                                                future: FirebaseStorage.instance
+                                                    .ref(imageReference)
+                                                    .getDownloadURL(),
+                                                builder: (BuildContext context,
+                                                    AsyncSnapshot<String>
+                                                        snapshot) {
+                                                  if (snapshot
+                                                          .connectionState ==
+                                                      ConnectionState.waiting) {
+                                                    return const CircularProgressIndicator();
+                                                  } else if (snapshot
+                                                      .hasError) {
+                                                    return const Icon(
+                                                        Icons.error);
+                                                  } else {
+                                                    return Image.network(
+                                                        snapshot.data!);
+                                                  }
+                                                },
+                                              )
+                                            : const Placeholder(),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
