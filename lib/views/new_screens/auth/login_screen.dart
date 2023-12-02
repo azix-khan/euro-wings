@@ -62,7 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
         Utils().toastMessage("Login Successfully");
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const TasksScreen()),
+          MaterialPageRoute(builder: (context) => TasksScreen()),
         );
       }
     } catch (error) {

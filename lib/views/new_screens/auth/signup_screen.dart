@@ -63,7 +63,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         Utils().toastMessage("Sign Up Successfully");
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const TasksScreen()),
+          MaterialPageRoute(builder: (context) => TasksScreen()),
         );
       }
     } catch (error) {

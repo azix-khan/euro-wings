@@ -1,3 +1,4 @@
+import 'package:euro_wings/views/new_screens/posts/tasks_screen.dart';
 import 'package:euro_wings/views/screens/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';

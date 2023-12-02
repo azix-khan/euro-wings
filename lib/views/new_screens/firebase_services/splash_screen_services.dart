@@ -14,8 +14,8 @@ class SplashServices {
 
     if (user != null) {
       Timer(const Duration(seconds: 3), () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const TasksScreen()));
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => TasksScreen()));
       });
     } else {
       Timer(const Duration(seconds: 3), () {
