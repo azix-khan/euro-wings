@@ -172,14 +172,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
-class AddItem extends StatefulWidget {
-  const AddItem({Key? key}) : super(key: key);
+class AddItemScreen extends StatefulWidget {
+  const AddItemScreen({Key? key}) : super(key: key);
 
   @override
-  State<AddItem> createState() => _AddItemState();
+  State<AddItemScreen> createState() => _AddItemScreenState();
 }
 
-class _AddItemState extends State<AddItem> {
+class _AddItemScreenState extends State<AddItemScreen> {
   final TextEditingController _controllerName = TextEditingController();
   final TextEditingController _controllerPrice = TextEditingController();
   final TextEditingController _controllerDesc = TextEditingController();

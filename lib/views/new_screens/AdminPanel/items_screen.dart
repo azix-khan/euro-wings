@@ -262,7 +262,7 @@
 //     );
 //   }
 // }
-// //   Future<void> showMyDialog(String title, String id) async {
+// //   Future<void> showMyDialogForUpdate(String title, String id) async {
 // //     final editingController = TextEditingController(text: title);
 
 // //     return showDialog(
@@ -347,56 +347,14 @@
 // //     );
 // //   }
 
-// //   void showCustomBottomSheet(BuildContext context, String title) {
-// //     double containerHeight = 500.0;
-
-// //     showModalBottomSheet(
-// //       context: context,
-// //       shape: const RoundedRectangleBorder(
-// //         borderRadius: BorderRadius.vertical(
-// //           top: Radius.circular(20.0),
-// //         ),
-// //       ),
-// //       builder: (BuildContext context) {
-// //         return Container(
-// //           padding: const EdgeInsets.all(20.0),
-// //           height: containerHeight,
-// //           child: Column(
-// //             mainAxisSize: MainAxisSize.min,
-// //             children: <Widget>[
-// //               const Divider(
-// //                 thickness: 5.5,
-// //                 indent: 130,
-// //                 endIndent: 130,
-// //                 color: Colors.black,
-// //               ),
-// //               const Divider(
-// //                 thickness: 2.0,
-// //                 color: Colors.teal,
-// //               ),
-// //               Container(
-// //                 height: 340,
-// //                 child: SingleChildScrollView(
-// //                   child: Text(
-// //                     title,
-// //                     style: const TextStyle(fontSize: 20),
-// //                   ),
-// //                 ),
-// //               ),
-// //             ],
-// //           ),
-// //         );
-// //       },
-// //     );
-// //   }
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:euro_wings/views/new_screens/posts/add_task_screen.dart';
+import 'package:euro_wings/views/new_screens/AdminPanel/add_item_screen.dart';
+import 'package:euro_wings/views/new_screens/AdminPanel/items_details_screen.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class TasksScreen extends StatelessWidget {
-  TasksScreen({Key? key}) : super(key: key) {
+class ItemsScreen extends StatelessWidget {
+  ItemsScreen({Key? key}) : super(key: key) {
     _stream = _reference.snapshots();
   }
 
@@ -404,6 +362,7 @@ class TasksScreen extends StatelessWidget {
       FirebaseFirestore.instance.collection('foodItems');
 
   late Stream<QuerySnapshot> _stream;
+  String imageUrl = '';
 
   @override
   Widget build(BuildContext context) {
@@ -426,7 +385,15 @@ class TasksScreen extends StatelessWidget {
             List<QueryDocumentSnapshot> documents = querySnapshot.docs;
 
             //Convert the documents to Maps
-            List<Map> items = documents.map((e) => e.data() as Map).toList();
+            List<Map> items = documents
+                .map((e) => {
+                      'id': e.id,
+                      'name': e['name'],
+                      'price': e['price'],
+                      'description': e['description'],
+                      'image': e['image'],
+                    })
+                .toList();
 
             //Display the list
             return ListView.builder(
@@ -443,12 +410,16 @@ class TasksScreen extends StatelessWidget {
                       height: 80,
                       width: 80,
                       child: thisItem.containsKey('image')
-                          ? Image.network('${thisItem['image']}')
+                          ? Image.network(
+                              '${thisItem['image']}, ',
+                              fit: BoxFit.cover,
+                            )
                           : Container(),
                     ),
                     onTap: () {
-                      // Navigator.of(context).push(MaterialPageRoute(
-                      //     builder: (context) => ItemDetails(thisItem['id'])));
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) =>
+                              ItemDetailsScreen(thisItem['id'])));
                     },
                   );
                 });
@@ -460,8 +431,8 @@ class TasksScreen extends StatelessWidget {
       ), //Display a list // Add a FutureBuilder
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => const AddItem()));
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => const AddItemScreen()));
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
@@ -469,3 +440,73 @@ class TasksScreen extends StatelessWidget {
     );
   }
 }
+
+// void showCustomBottomSheet(
+//     BuildContext context, String title, price, desc, image) {
+//   showModalBottomSheet(
+//     context: context,
+//     shape: const RoundedRectangleBorder(
+//       borderRadius: BorderRadius.vertical(
+//         top: Radius.circular(20.0),
+//       ),
+//     ),
+//     builder: (BuildContext context) {
+//       return Container(
+//         padding: const EdgeInsets.all(20.0),
+//         height: double.infinity,
+//         child: Column(
+//           mainAxisSize: MainAxisSize.min,
+//           children: <Widget>[
+//             const Divider(
+//               thickness: 5.5,
+//               indent: 130,
+//               endIndent: 130,
+//               color: Colors.black,
+//             ),
+//             const Divider(
+//               thickness: 2.0,
+//               color: Colors.teal,
+//             ),
+//             Container(
+//               height: 40,
+//               child: SingleChildScrollView(
+//                 child: Text(
+//                   title,
+//                   style: const TextStyle(fontSize: 20),
+//                 ),
+//               ),
+//             ),
+//             Container(
+//               height: 40,
+//               child: SingleChildScrollView(
+//                 child: Text(
+//                   price,
+//                   style: const TextStyle(fontSize: 20),
+//                 ),
+//               ),
+//             ),
+//             Container(
+//               height: 40,
+//               child: SingleChildScrollView(
+//                 child: Text(
+//                   desc,
+//                   style: const TextStyle(fontSize: 20),
+//                 ),
+//               ),
+//             ),
+//             Container(
+//               height: 40,
+//               width: 40,
+//               child: SingleChildScrollView(
+//                 child: Image.network(
+//                   image,
+//                   fit: BoxFit.cover,
+//                 ),
+//               ),
+//             ),
+//           ],
+//         ),
+//       );
+//     },
+//   );
+// }

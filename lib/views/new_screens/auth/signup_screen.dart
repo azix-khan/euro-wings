@@ -1,5 +1,5 @@
 import 'package:euro_wings/views/new_screens/auth/login_screen.dart';
-import 'package:euro_wings/views/new_screens/posts/tasks_screen.dart';
+import 'package:euro_wings/views/new_screens/AdminPanel/items_screen.dart';
 import 'package:euro_wings/views/new_screens/widgets/round_button.dart';
 import 'package:euro_wings/views/new_screens/widgets/utils/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -63,7 +63,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         Utils().toastMessage("Sign Up Successfully");
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => TasksScreen()),
+          MaterialPageRoute(builder: (context) => ItemsScreen()),
         );
       }
     } catch (error) {

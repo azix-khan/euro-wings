@@ -1,6 +1,6 @@
 import 'package:euro_wings/views/new_screens/auth/forgot_password_screen.dart';
 import 'package:euro_wings/views/new_screens/auth/signup_screen.dart';
-import 'package:euro_wings/views/new_screens/posts/tasks_screen.dart';
+import 'package:euro_wings/views/new_screens/AdminPanel/items_screen.dart';
 import 'package:euro_wings/views/new_screens/widgets/round_button.dart';
 import 'package:euro_wings/views/new_screens/widgets/utils/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -62,7 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
         Utils().toastMessage("Login Successfully");
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => TasksScreen()),
+          MaterialPageRoute(builder: (context) => ItemsScreen()),
         );
       }
     } catch (error) {
