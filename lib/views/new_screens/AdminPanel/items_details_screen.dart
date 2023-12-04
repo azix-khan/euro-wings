@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:euro_wings/constants/colors.dart';
 import 'package:euro_wings/views/new_screens/AdminPanel/update_item_screen.dart';
 import 'package:euro_wings/views/new_screens/widgets/utils/delete_dialog.dart';
-import 'package:euro_wings/views/new_screens/widgets/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -26,17 +25,15 @@ class ItemDetailsScreen extends StatelessWidget {
     final width = MediaQuery.sizeOf(context).width * 1;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Item Details'),
-        centerTitle: true,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
+        title: const Text(
+          'Item Details',
+        ),
         leading: InkWell(
             onTap: () {
               Navigator.of(context).pop();
             },
             child: const Icon(
               Icons.arrow_back_ios_new,
-              color: Colors.black,
             )),
       ),
       body: FutureBuilder<DocumentSnapshot>(
@@ -103,6 +100,9 @@ class ItemDetailsScreen extends StatelessWidget {
                         children: [
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                ),
                                 backgroundColor: Colors.red),
                             onPressed: () {
                               showDialog(
@@ -117,12 +117,15 @@ class ItemDetailsScreen extends StatelessWidget {
                             },
                             child: Text(
                               'Delete',
-                              style: TextStyle(color: buttonColor),
+                              style: TextStyle(color: whiteColor),
                             ),
                           ),
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.blue),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                ),
+                                backgroundColor: greenColor),
                             onPressed: () {
                               //add the id to the map
                               data['id'] = itemId;
@@ -133,7 +136,7 @@ class ItemDetailsScreen extends StatelessWidget {
                             },
                             child: Text(
                               'Update',
-                              style: TextStyle(color: buttonColor),
+                              style: TextStyle(color: whiteColor),
                             ),
                           ),
                         ],
@@ -145,9 +148,9 @@ class ItemDetailsScreen extends StatelessWidget {
                         child: Text(
                           'Price: ${data['price']}',
                           style: GoogleFonts.poppins(
-                              fontSize: 15,
-                              color: backgroundColor,
-                              fontWeight: FontWeight.bold),
+                              fontSize: 20,
+                              color: blueColor,
+                              fontWeight: FontWeight.w500),
                         ),
                       ),
                       const Divider(),

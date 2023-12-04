@@ -1,3 +1,4 @@
+import 'package:euro_wings/constants/colors.dart';
 import 'package:euro_wings/views/new_screens/widgets/round_button.dart';
 import 'package:euro_wings/views/new_screens/widgets/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -20,8 +21,16 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Fogot Password'),
-        centerTitle: true,
+        title: const Text(
+          'Forgot Password',
+        ),
+        leading: InkWell(
+            onTap: () {
+              Navigator.of(context).pop();
+            },
+            child: const Icon(
+              Icons.arrow_back_ios_new,
+            )),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),

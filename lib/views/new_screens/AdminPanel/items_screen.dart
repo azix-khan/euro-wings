@@ -348,8 +348,12 @@
 // }
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:euro_wings/constants/colors.dart';
 import 'package:euro_wings/views/new_screens/AdminPanel/add_item_screen.dart';
 import 'package:euro_wings/views/new_screens/AdminPanel/items_details_screen.dart';
+import 'package:euro_wings/views/new_screens/auth/login_screen.dart';
+import 'package:euro_wings/views/new_screens/widgets/utils/utils.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -357,6 +361,8 @@ class ItemsScreen extends StatelessWidget {
   ItemsScreen({Key? key}) : super(key: key) {
     _stream = _reference.snapshots();
   }
+
+  final FirebaseAuth auth = FirebaseAuth.instance;
 
   final CollectionReference _reference =
       FirebaseFirestore.instance.collection('foodItems');
@@ -368,8 +374,9 @@ class ItemsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Food Items'),
-        centerTitle: true,
+        title: const Text(
+          'Food Items',
+        ),
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: InkWell(
@@ -378,8 +385,28 @@ class ItemsScreen extends StatelessWidget {
             },
             child: const Icon(
               Icons.arrow_back_ios_new,
-              color: Colors.black,
             )),
+        actions: [
+          IconButton(
+            onPressed: () {
+              auth.signOut().then((value) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const LoginScreen(),
+                  ),
+                );
+              }).onError((error, stackTrace) {
+                Utils().toastMessage(error.toString());
+              });
+            },
+            icon: Icon(
+              Icons.logout,
+              color: orangeColor,
+            ),
+            tooltip: 'Sign Out',
+          ),
+        ],
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: _stream,

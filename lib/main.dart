@@ -1,3 +1,4 @@
+import 'package:euro_wings/constants/themes.dart';
 import 'package:euro_wings/views/screens/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -26,10 +27,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      theme: personaliteTheme,
+      debugShowCheckedModeBanner: false,
       home: const SplashScreen(),
     );
   }

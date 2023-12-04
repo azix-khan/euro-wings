@@ -3,10 +3,10 @@ import 'package:euro_wings/views/new_screens/auth/signup_screen.dart';
 import 'package:euro_wings/views/new_screens/AdminPanel/items_screen.dart';
 import 'package:euro_wings/views/new_screens/widgets/round_button.dart';
 import 'package:euro_wings/views/new_screens/widgets/utils/utils.dart';
+import 'package:euro_wings/views/screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -41,25 +41,12 @@ class _LoginScreenState extends State<LoginScreen> {
       );
 
       if (userCredential != null) {
-        // Retrieve the user's tasks from Firestore
-        final userId = userCredential.user!.uid;
-        final tasksCollection = FirebaseFirestore.instance.collection('tasks');
-        final userTasks =
-            await tasksCollection.where('userId', isEqualTo: userId).get();
-
-        // You can now use the userTasks snapshot to display tasks
-        // For example, print the task titles
-        userTasks.docs.forEach(
-          (task) {
-            print('Task Title: ${task.data()['title']}');
-          },
-        );
-
         setState(() {
           loading = false;
         });
 
         Utils().toastMessage("Login Successfully");
+        // ignore: use_build_context_synchronously
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => ItemsScreen()),
@@ -83,9 +70,19 @@ class _LoginScreenState extends State<LoginScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
-          centerTitle: true,
-          title: const Text("Admin Login"),
-          // automaticallyImplyLeading: true,
+          title: const Text(
+            'Admin Login',
+          ),
+          leading: InkWell(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const HomeScreen()));
+              },
+              child: const Icon(
+                Icons.arrow_back_ios_new,
+              )),
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -96,7 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(
+                  SizedBox(
                     height: 250,
                     child: Image.asset('images/login.png'),
                   ),

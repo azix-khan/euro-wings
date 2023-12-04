@@ -13,6 +13,7 @@ class DeleteItemDialog {
 
   Widget build() {
     return AlertDialog(
+      backgroundColor: Colors.white,
       title: const Text(
         'Delete',
         style: TextStyle(color: Colors.red),
@@ -23,7 +24,10 @@ class DeleteItemDialog {
           onPressed: () {
             Navigator.pop(context);
           },
-          child: const Text('Cancel'),
+          child: const Text(
+            'Cancel',
+            style: TextStyle(color: Colors.blue),
+          ),
         ),
         TextButton(
           onPressed: () {
