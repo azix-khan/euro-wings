@@ -308,44 +308,44 @@
 // //     );
 // //   }
 
-// //   Future<void> showMyDialogForDelete(String id) async {
-// //     return showDialog(
-// //       context: context,
-// //       builder: (BuildContext context) {
-// //         return AlertDialog(
-// //           title: const Text(
-// //             'Delete',
-// //             style: TextStyle(color: Colors.red),
-// //           ),
-// //           content: const Text('Do you really want to delete this task?'),
-// //           actions: [
-// //             TextButton(
-// //               onPressed: () {
-// //                 Navigator.pop(context);
-// //               },
-// //               child: const Text('Cancel'),
-// //             ),
-// //             TextButton(
-// //               onPressed: () {
-// //                 final tasksCollection =
-// //                     FirebaseFirestore.instance.collection('tasks');
-// //                 tasksCollection.doc(id).delete().then((value) {
-// //                   Utils().toastMessage('Task Deleted');
-// //                   Navigator.pop(context);
-// //                 }).catchError((error) {
-// //                   Utils().toastMessage(error.toString());
-// //                 });
-// //               },
-// //               child: const Text(
-// //                 'Delete',
-// //                 style: TextStyle(color: Colors.red),
-// //               ),
-// //             ),
-// //           ],
-// //         );
-// //       },
-// //     );
-// //   }
+// Future<void> showMyDialogForDelete(String id) async {
+//   return showDialog(
+//     context: context,
+//     builder: (BuildContext context) {
+//       return AlertDialog(
+//         title: const Text(
+//           'Delete',
+//           style: TextStyle(color: Colors.red),
+//         ),
+//         content: const Text('Do you really want to delete this task?'),
+//         actions: [
+//           TextButton(
+//             onPressed: () {
+//               Navigator.pop(context);
+//             },
+//             child: const Text('Cancel'),
+//           ),
+//           TextButton(
+//             onPressed: () {
+//               final tasksCollection =
+//                   FirebaseFirestore.instance.collection('tasks');
+//               tasksCollection.doc(id).delete().then((value) {
+//                 Utils().toastMessage('Task Deleted');
+//                 Navigator.pop(context);
+//               }).catchError((error) {
+//                 Utils().toastMessage(error.toString());
+//               });
+//             },
+//             child: const Text(
+//               'Delete',
+//               style: TextStyle(color: Colors.red),
+//             ),
+//           ),
+//         ],
+//       );
+//     },
+//   );
+// }
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:euro_wings/views/new_screens/AdminPanel/add_item_screen.dart';
@@ -368,7 +368,18 @@ class ItemsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Items'),
+        title: const Text('Food Items'),
+        centerTitle: true,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: InkWell(
+            onTap: () {
+              Navigator.of(context).pop();
+            },
+            child: const Icon(
+              Icons.arrow_back_ios_new,
+              color: Colors.black,
+            )),
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: _stream,
@@ -404,8 +415,8 @@ class ItemsScreen extends StatelessWidget {
                   //REturn the widget for the list items
                   return ListTile(
                     title: Text('${thisItem['name']}'),
-                    subtitle: Text('${thisItem['price']}'),
-                    trailing: Text('${thisItem['description']}'),
+                    trailing: Text('${thisItem['price']}'),
+                    subtitle: Text('${thisItem['description']}'),
                     leading: SizedBox(
                       height: 80,
                       width: 80,
