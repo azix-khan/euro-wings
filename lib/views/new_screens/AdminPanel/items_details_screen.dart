@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:euro_wings/constants/colors.dart';
+import 'package:euro_wings/constants/fonts.dart';
 import 'package:euro_wings/views/new_screens/AdminPanel/update_item_screen.dart';
 import 'package:euro_wings/views/new_screens/widgets/utils/delete_dialog.dart';
 import 'package:flutter/material.dart';
@@ -84,13 +85,8 @@ class ItemDetailsScreen extends StatelessWidget {
                   child: ListView(
                     children: [
                       Center(
-                        child: Text(
-                          '${data['name']}',
-                          style: GoogleFonts.poppins(
-                              fontSize: 20,
-                              color: Colors.black87,
-                              fontWeight: FontWeight.w700),
-                        ),
+                        child: Text('${data['name']}',
+                            style: textTheme.headlineLarge),
                       ),
                       SizedBox(
                         height: height * .02,
@@ -147,20 +143,12 @@ class ItemDetailsScreen extends StatelessWidget {
                       Center(
                         child: Text(
                           'Price: ${data['price']}',
-                          style: GoogleFonts.poppins(
-                              fontSize: 20,
-                              color: blueColor,
-                              fontWeight: FontWeight.w500),
+                          style: textTheme.bodyLarge,
                         ),
                       ),
                       const Divider(),
-                      Text(
-                        'Description: \n\n${data['description']}',
-                        style: GoogleFonts.poppins(
-                            fontSize: 15,
-                            color: Colors.black87,
-                            fontWeight: FontWeight.w500),
-                      ),
+                      Text('Description: \n\n${data['description']}',
+                          style: textTheme.titleLarge),
                     ],
                   ),
                 )

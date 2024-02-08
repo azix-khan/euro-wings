@@ -1,3 +1,4 @@
+import 'package:euro_wings/constants/fonts.dart';
 import 'package:euro_wings/views/custom_widgets/customNavigation.dart';
 import 'package:euro_wings/views/custom_widgets/more_menu_button.dart';
 import 'package:euro_wings/constants/themes.dart';
@@ -12,7 +13,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.sizeOf(context).height * 1;
+    // final height = MediaQuery.sizeOf(context).height * 1;
     return WillPopScope(
       onWillPop: () async {
         SystemNavigator.pop();
@@ -21,19 +22,11 @@ class HomeScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: const Column(
+          title: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('EURO',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                      color: Colors.black)),
-              Text('W I N G S',
-                  style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 10,
-                      color: Colors.black)),
+              Text('EURO', style: textTheme.displayLarge),
+              Text('W I N G S', style: textTheme.displayMedium),
             ],
           ),
           actions: [
