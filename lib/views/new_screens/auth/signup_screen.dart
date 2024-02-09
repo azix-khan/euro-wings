@@ -4,7 +4,6 @@ import 'package:euro_wings/views/new_screens/widgets/round_button.dart';
 import 'package:euro_wings/views/new_screens/widgets/utils/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -44,6 +43,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         password: passwordController.text.toString(),
       );
 
+      // ignore: unnecessary_null_comparison
       if (userCredential != null) {
         final userId = userCredential.user!.uid;
 
@@ -61,6 +61,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         });
 
         Utils().toastMessage("Sign Up Successfully");
+        // ignore: use_build_context_synchronously
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => ItemsScreen()),
@@ -98,6 +99,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                // ignore: sized_box_for_whitespace
                 Container(
                   height: 200,
                   child: Image.asset('images/signup.png'),

@@ -7,7 +7,9 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+// ignore: must_be_immutable
 class UpdateItemScreen extends StatefulWidget {
+  // ignore: use_key_in_widget_constructors
   UpdateItemScreen(this._foodItem, {Key? key}) {
     _controllerName = TextEditingController(text: _foodItem['name']);
     _controllerPrice = TextEditingController(text: _foodItem['price']);
@@ -179,6 +181,7 @@ class _UpdateItemScreenState extends State<UpdateItemScreen> {
   }
 
   void _updateImageUrl(XFile file) async {
+    // ignore: unused_local_variable
     String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
 
     Reference referenceImageToUpload =

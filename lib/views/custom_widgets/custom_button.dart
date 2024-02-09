@@ -1,6 +1,7 @@
 import 'package:euro_wings/constants/colors.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class CustomButton extends StatelessWidget {
   void Function() onTap;
   String title;

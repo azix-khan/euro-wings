@@ -1,4 +1,3 @@
-import 'package:euro_wings/constants/colors.dart';
 import 'package:euro_wings/views/new_screens/widgets/round_button.dart';
 import 'package:euro_wings/views/new_screens/widgets/utils/utils.dart';
 import 'package:flutter/material.dart';

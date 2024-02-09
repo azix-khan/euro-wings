@@ -5,7 +5,6 @@ import 'package:euro_wings/constants/fonts.dart';
 import 'package:euro_wings/views/new_screens/AdminPanel/update_item_screen.dart';
 import 'package:euro_wings/views/new_screens/widgets/utils/delete_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 // ignore: must_be_immutable
 class ItemDetailsScreen extends StatelessWidget {

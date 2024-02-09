@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:euro_wings/constants/colors.dart';
 import 'package:euro_wings/constants/themes.dart';
 import 'package:euro_wings/views/custom_widgets/custom_button.dart';
 import 'package:euro_wings/views/screens/home_screen.dart';
@@ -29,6 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
     final width = MediaQuery.sizeOf(context).width * 1;
     return Scaffold(
       backgroundColor: primary,
+      // ignore: avoid_unnecessary_containers
       body: Container(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

@@ -40,6 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
         password: passwordController.text.toString(),
       );
 
+      // ignore: unnecessary_null_comparison
       if (userCredential != null) {
         setState(() {
           loading = false;
@@ -63,6 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () async {
         SystemNavigator.pop();
