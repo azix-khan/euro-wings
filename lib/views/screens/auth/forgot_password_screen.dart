@@ -1,5 +1,5 @@
-import 'package:euro_wings/views/new_screens/widgets/round_button.dart';
-import 'package:euro_wings/views/new_screens/widgets/utils/utils.dart';
+import 'package:euro_wings/views/custom_widgets/widgets/round_button.dart';
+import 'package:euro_wings/views/custom_widgets/widgets/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 

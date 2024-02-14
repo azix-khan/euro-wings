@@ -1,8 +1,8 @@
-import 'package:euro_wings/views/new_screens/auth/forgot_password_screen.dart';
-import 'package:euro_wings/views/new_screens/auth/signup_screen.dart';
-import 'package:euro_wings/views/new_screens/AdminPanel/items_screen.dart';
-import 'package:euro_wings/views/new_screens/widgets/round_button.dart';
-import 'package:euro_wings/views/new_screens/widgets/utils/utils.dart';
+import 'package:euro_wings/views/custom_widgets/widgets/round_button.dart';
+import 'package:euro_wings/views/custom_widgets/widgets/utils/utils.dart';
+import 'package:euro_wings/views/screens/AdminPanel/items_screen.dart';
+import 'package:euro_wings/views/screens/auth/forgot_password_screen.dart';
+import 'package:euro_wings/views/screens/auth/signup_screen.dart';
 import 'package:euro_wings/views/screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

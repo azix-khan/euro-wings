@@ -2,8 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:euro_wings/constants/colors.dart';
 import 'package:euro_wings/constants/fonts.dart';
-import 'package:euro_wings/views/new_screens/AdminPanel/update_item_screen.dart';
-import 'package:euro_wings/views/new_screens/widgets/utils/delete_dialog.dart';
+import 'package:euro_wings/views/custom_widgets/widgets/utils/delete_dialog.dart';
+import 'package:euro_wings/views/screens/AdminPanel/update_item_screen.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable

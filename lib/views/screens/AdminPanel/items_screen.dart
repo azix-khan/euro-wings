@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:euro_wings/constants/colors.dart';
-import 'package:euro_wings/views/new_screens/AdminPanel/add_item_screen.dart';
-import 'package:euro_wings/views/new_screens/AdminPanel/items_details_screen.dart';
-import 'package:euro_wings/views/new_screens/auth/login_screen.dart';
-import 'package:euro_wings/views/new_screens/widgets/utils/utils.dart';
+import 'package:euro_wings/views/screens/AdminPanel/add_item_screen.dart';
+import 'package:euro_wings/views/screens/AdminPanel/items_details_screen.dart';
+import 'package:euro_wings/views/screens/auth/login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import '../../custom_widgets/widgets/utils/utils.dart';
 
 // ignore: must_be_immutable
 class ItemsScreen extends StatelessWidget {

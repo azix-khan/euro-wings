@@ -2,7 +2,7 @@ import 'package:euro_wings/constants/fonts.dart';
 import 'package:euro_wings/views/custom_widgets/customNavigation.dart';
 import 'package:euro_wings/views/custom_widgets/more_menu_button.dart';
 import 'package:euro_wings/constants/themes.dart';
-import 'package:euro_wings/views/new_screens/auth/login_screen.dart';
+import 'package:euro_wings/views/screens/auth/login_screen.dart';
 import 'package:euro_wings/views/screens/menu_list.dart';
 import 'package:euro_wings/views/custom_widgets/slogan.dart';
 import 'package:flutter/material.dart';

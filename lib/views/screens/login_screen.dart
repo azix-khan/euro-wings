@@ -1,6 +1,6 @@
 // login_page.dart
 
-import 'package:euro_wings/views/screens/admin_screen.dart';
+import 'package:euro_wings/views/screens/AdminPanel/items_screen.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -42,7 +42,7 @@ class _LoginPageState extends State<LoginPage> {
                 // Implement authentication logic here
                 // For simplicity, assume the login is always successful
                 Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => AdminPanel()),
+                  MaterialPageRoute(builder: (context) => ItemsScreen()),
                 );
               },
               child: const Text('Login'),
