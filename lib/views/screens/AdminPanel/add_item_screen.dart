@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:euro_wings/constants/colors.dart';
 import 'package:euro_wings/views/custom_widgets/widgets/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -8,13 +7,25 @@ import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class AddItemScreen extends StatefulWidget {
-  const AddItemScreen({Key? key}) : super(key: key);
+  const AddItemScreen({Key? key, required String selectedCategory})
+      : super(key: key);
 
   @override
   State<AddItemScreen> createState() => _AddItemScreenState();
 }
 
 class _AddItemScreenState extends State<AddItemScreen> {
+  List<String> categoriesList = [
+    'Pizza',
+    'Burger',
+    'Shwarma',
+    'Wings',
+    'Fries',
+    'Pasta',
+    'Chowmien',
+  ];
+
+  String selectedCategory = 'Pizza';
   final TextEditingController _controllerName = TextEditingController();
   final TextEditingController _controllerPrice = TextEditingController();
   final TextEditingController _controllerDesc = TextEditingController();
@@ -25,6 +36,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
       FirebaseFirestore.instance.collection('foodItems');
 
   String imageUrl = '';
+  // String selectedCategory = '';
 
   @override
   Widget build(BuildContext context) {
@@ -33,12 +45,13 @@ class _AddItemScreenState extends State<AddItemScreen> {
         title: const Text('Add an Item'),
         elevation: 0,
         leading: InkWell(
-            onTap: () {
-              Navigator.of(context).pop();
-            },
-            child: const Icon(
-              Icons.arrow_back_ios_new,
-            )),
+          onTap: () {
+            Navigator.of(context).pop();
+          },
+          child: const Icon(
+            Icons.arrow_back_ios_new,
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -68,28 +81,21 @@ class _AddItemScreenState extends State<AddItemScreen> {
                                 .toString();
 
                             /* Upload to Firebase storage*/
-
-                            //Get a reference to storage root
                             Reference referenceRoot =
                                 FirebaseStorage.instance.ref();
                             Reference referenceDirImages =
                                 referenceRoot.child('images');
 
-                            //Create a reference for the image to be stored
                             Reference referenceImageToUpload =
                                 referenceDirImages.child(uniqueFileName);
 
-                            //Handle errors/success
                             try {
-                              //Store the file
                               await referenceImageToUpload
-                                  .putFile(File(file!.path));
-                              //Success: get the download URL
+                                  .putFile(File(file.path));
                               imageUrl =
                                   await referenceImageToUpload.getDownloadURL();
                               setState(() {});
                             } catch (error) {
-                              //Some error occurred
                               Utils().toastMessage(error.toString());
                             }
                           },
@@ -98,7 +104,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                             size: 55,
                             color: Colors.blue,
                           ),
-                        ) // show image if selected
+                        )
                       : Image.network(
                           imageUrl,
                           fit: BoxFit.cover,
@@ -107,17 +113,47 @@ class _AddItemScreenState extends State<AddItemScreen> {
                 const SizedBox(
                   height: 18,
                 ),
+                DropdownButtonFormField<String>(
+                  value: selectedCategory,
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      selectedCategory = newValue!;
+                    });
+                  },
+                  items: categoriesList.map((category) {
+                    return DropdownMenuItem<String>(
+                      value: category,
+                      child: Text(category),
+                    );
+                  }).toList(),
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                    ),
+                    labelText: 'Select Category',
+                  ),
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please select a category';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(
+                  height: 18,
+                ),
                 TextFormField(
                   controller: _controllerName,
                   decoration: const InputDecoration(
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20))),
-                      labelText: 'Enter the name of the item'),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                    ),
+                    labelText: 'Enter the name of the item',
+                  ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter the item name';
                     }
-
                     return null;
                   },
                 ),
@@ -127,15 +163,15 @@ class _AddItemScreenState extends State<AddItemScreen> {
                 TextFormField(
                   controller: _controllerPrice,
                   decoration: const InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                      ),
-                      labelText: 'Enter the price of the item'),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                    ),
+                    labelText: 'Enter the price of the item',
+                  ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter the item price';
                     }
-
                     return null;
                   },
                 ),
@@ -145,14 +181,15 @@ class _AddItemScreenState extends State<AddItemScreen> {
                 TextFormField(
                   controller: _controllerDesc,
                   decoration: const InputDecoration(
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20))),
-                      labelText: 'Enter the description of the item'),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                    ),
+                    labelText: 'Enter the description of the item',
+                  ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter the item description';
                     }
-
                     return null;
                   },
                 ),
@@ -160,34 +197,32 @@ class _AddItemScreenState extends State<AddItemScreen> {
                   height: 18,
                 ),
                 ElevatedButton(
-                    onPressed: () async {
-                      if (imageUrl.isEmpty) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                                content: Text('Please upload an image')));
+                  onPressed: () async {
+                    if (imageUrl.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Text('Please upload an image')));
+                      return;
+                    }
 
-                        return;
-                      }
+                    if (key.currentState!.validate()) {
+                      String itemName = _controllerName.text;
+                      String itemPrice = _controllerPrice.text;
+                      String itemdesc = _controllerDesc.text;
 
-                      if (key.currentState!.validate()) {
-                        String itemName = _controllerName.text;
-                        String itemPrice = _controllerPrice.text;
-                        String itemdesc = _controllerDesc.text;
+                      Map<String, dynamic> dataToSend = {
+                        'name': itemName,
+                        'price': itemPrice,
+                        'description': itemdesc,
+                        'image': imageUrl,
+                        'category': selectedCategory,
+                      };
 
-                        //Create a Map of data
-                        Map<String, String> dataToSend = {
-                          'name': itemName,
-                          'price': itemPrice,
-                          'description': itemdesc,
-                          'image': imageUrl,
-                        };
-
-                        //Add a new item
-                        _reference.add(dataToSend);
-                        Navigator.of(context).pop();
-                      }
-                    },
-                    child: const Text('Submit'))
+                      _reference.add(dataToSend);
+                      Navigator.of(context).pop();
+                    }
+                  },
+                  child: const Text('Submit'),
+                )
               ],
             ),
           ),
@@ -195,4 +230,14 @@ class _AddItemScreenState extends State<AddItemScreen> {
       ),
     );
   }
+
+  // List<String> categoriesList = [
+  //   'Pizza',
+  //   'Burger',
+  //   'Shwarma',
+  //   'Wings',
+  //   'Fries',
+  //   'Pasta',
+  //   'Chowmien',
+  // ];
 }

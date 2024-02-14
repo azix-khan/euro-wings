@@ -1,5 +1,4 @@
 import 'package:euro_wings/constants/themes.dart';
-import 'package:euro_wings/views/screens/AdminPanel/items_screen.dart';
 import 'package:euro_wings/views/screens/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +35,7 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             theme: personaliteTheme,
             debugShowCheckedModeBanner: false,
-            home: ItemsScreen(),
+            home: const SplashScreen(),
           );
         });
   }

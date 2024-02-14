@@ -7,21 +7,17 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-// ignore: must_be_immutable
 class UpdateItemScreen extends StatefulWidget {
-  // ignore: use_key_in_widget_constructors
-  UpdateItemScreen(this._foodItem, {Key? key}) {
-    _controllerName = TextEditingController(text: _foodItem['name']);
-    _controllerPrice = TextEditingController(text: _foodItem['price']);
-    _controllerDesc = TextEditingController(text: _foodItem['description']);
-
-    _reference =
-        FirebaseFirestore.instance.collection('foodItems').doc(_foodItem['id']);
-  }
-
   final Map _foodItem;
-  late DocumentReference _reference;
 
+  const UpdateItemScreen(this._foodItem, {Key? key}) : super(key: key);
+
+  @override
+  UpdateItemScreenState createState() => UpdateItemScreenState();
+}
+
+class UpdateItemScreenState extends State<UpdateItemScreen> {
+  late DocumentReference _reference;
   late TextEditingController _controllerName;
   late TextEditingController _controllerPrice;
   late TextEditingController _controllerDesc;
@@ -29,31 +25,35 @@ class UpdateItemScreen extends StatefulWidget {
   String imageUrl = '';
 
   @override
-  _UpdateItemScreenState createState() => _UpdateItemScreenState();
-}
+  void initState() {
+    super.initState();
+    _controllerName = TextEditingController(text: widget._foodItem['name']);
+    _controllerPrice = TextEditingController(text: widget._foodItem['price']);
+    _controllerDesc =
+        TextEditingController(text: widget._foodItem['description']);
+    _reference = FirebaseFirestore.instance
+        .collection('foodItems')
+        .doc(widget._foodItem['id']);
+    imageUrl = widget._foodItem['image'];
+  }
 
-class _UpdateItemScreenState extends State<UpdateItemScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Update an item',
-        ),
+        title: const Text('Update an item'),
         leading: InkWell(
           onTap: () {
             Navigator.of(context).pop();
           },
-          child: const Icon(
-            Icons.arrow_back_ios_new,
-          ),
+          child: const Icon(Icons.arrow_back_ios_new),
         ),
       ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.only(top: 30.0, left: 20, right: 20),
           child: Form(
-            key: widget._key,
+            key: _key,
             child: Column(
               children: [
                 Container(
@@ -62,10 +62,9 @@ class _UpdateItemScreenState extends State<UpdateItemScreen> {
                   decoration: BoxDecoration(
                     border: Border.all(color: backgroundColor),
                   ),
-                  child: widget.imageUrl.isEmpty
+                  child: imageUrl.isEmpty
                       ? IconButton(
                           onPressed: () async {
-                            //Pick image
                             ImagePicker imagePicker = ImagePicker();
                             XFile? file = await imagePicker.pickImage(
                               source: ImageSource.gallery,
@@ -82,7 +81,7 @@ class _UpdateItemScreenState extends State<UpdateItemScreen> {
                           ),
                         )
                       : Image.network(
-                          widget.imageUrl,
+                          imageUrl,
                           fit: BoxFit.cover,
                         ),
                 ),
@@ -90,7 +89,7 @@ class _UpdateItemScreenState extends State<UpdateItemScreen> {
                   height: 18,
                 ),
                 TextFormField(
-                  controller: widget._controllerName,
+                  controller: _controllerName,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -108,7 +107,7 @@ class _UpdateItemScreenState extends State<UpdateItemScreen> {
                   height: 18,
                 ),
                 TextFormField(
-                  controller: widget._controllerPrice,
+                  controller: _controllerPrice,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -126,7 +125,7 @@ class _UpdateItemScreenState extends State<UpdateItemScreen> {
                   height: 18,
                 ),
                 TextFormField(
-                  controller: widget._controllerDesc,
+                  controller: _controllerDesc,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -145,29 +144,30 @@ class _UpdateItemScreenState extends State<UpdateItemScreen> {
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                      backgroundColor: greenColor),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    backgroundColor: greenColor,
+                  ),
                   onPressed: () async {
-                    if (widget._key.currentState!.validate()) {
-                      String name = widget._controllerName.text;
-                      String price = widget._controllerPrice.text;
-                      String description = widget._controllerDesc.text;
+                    if (_key.currentState!.validate()) {
+                      String name = _controllerName.text;
+                      String price = _controllerPrice.text;
+                      String description = _controllerDesc.text;
 
                       // Create the Map of data
                       Map<String, String> dataToUpdate = {
                         'name': name,
                         'price': price,
                         'description': description,
-                        'image': widget.imageUrl,
+                        'image': imageUrl,
                       };
 
                       // Call update()
-                      widget._reference.update(dataToUpdate);
-                      Navigator.of(context).pop();
-                      Navigator.of(context).pop();
+                      _reference.update(dataToUpdate);
                       Utils().toastMessage('Item Updated');
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pop();
                     }
                   },
                   child: const Text('Update'),
@@ -181,15 +181,14 @@ class _UpdateItemScreenState extends State<UpdateItemScreen> {
   }
 
   void _updateImageUrl(XFile file) async {
-    // ignore: unused_local_variable
     String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
 
     Reference referenceImageToUpload =
-        FirebaseStorage.instance.refFromURL(widget._foodItem['image']);
+        FirebaseStorage.instance.ref().child(uniqueFileName);
 
     try {
       await referenceImageToUpload.putFile(File(file.path));
-      widget.imageUrl = await referenceImageToUpload.getDownloadURL();
+      imageUrl = await referenceImageToUpload.getDownloadURL();
       setState(() {});
     } catch (error) {
       Utils().toastMessage(error.toString());
