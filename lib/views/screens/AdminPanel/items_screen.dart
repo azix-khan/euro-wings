@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:euro_wings/constants/colors.dart';
+import 'package:euro_wings/constants/themes.dart';
 import 'package:euro_wings/views/screens/AdminPanel/add_item_screen.dart';
 import 'package:euro_wings/views/screens/AdminPanel/items_details_screen.dart';
 import 'package:euro_wings/views/screens/auth/login_screen.dart';
@@ -96,8 +97,8 @@ class ItemsScreenState extends State<ItemsScreen> {
                         ),
                         backgroundColor:
                             categoriesList[index] == selectedCategory
-                                ? Colors.blueAccent
-                                : Colors.grey,
+                                ? Colors.amber
+                                : Colors.black,
                       ),
                       onPressed: () {
                         setState(() {
@@ -198,7 +199,10 @@ class ItemsScreenState extends State<ItemsScreen> {
           );
         },
         tooltip: 'Add Item',
-        child: const Icon(Icons.add),
+        child: const Icon(
+          Icons.add,
+          color: primary,
+        ),
       ),
     );
   }
