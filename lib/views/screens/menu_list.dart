@@ -6,23 +6,38 @@ class MenuList extends StatelessWidget {
   final List<Menu> menu = [
     Menu(
       id: 1,
-      title: "Burgers",
+      title: "Burger",
       image: 'images/hamburger.png',
     ),
     Menu(
       id: 2,
-      title: "Shwarmas",
+      title: "Shwarma",
       image: 'images/fajita.png',
     ),
     Menu(
       id: 3,
       title: "Fries",
-      image: 'images/salchipapa.png',
+      image: 'images/papasfritas.png',
     ),
     Menu(
       id: 4,
-      title: "Pizzas",
+      title: "Pizza",
       image: 'images/pizza.png',
+    ),
+    Menu(
+      id: 5,
+      title: "Pasta",
+      image: 'images/pasta.png',
+    ),
+    Menu(
+      id: 6,
+      title: "Chowmein",
+      image: 'images/chowmein.png',
+    ),
+    Menu(
+      id: 7,
+      title: "Wings",
+      image: 'images/wings.png',
     ),
     // Add more deals as needed
   ];

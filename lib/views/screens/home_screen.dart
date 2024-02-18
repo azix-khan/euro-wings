@@ -53,19 +53,14 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
         body: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Slogan(Colors.black.withOpacity(0.9),
                 'F R E S H - I N D R I E D I E N T S', 'Tasty Thrills'),
             Slogan(Colors.blueGrey.shade900,
                 'T R A D I T I O N A L - R E C I P I E', 'Affordable Bills'),
             // Tables Food :
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                // Menu List
-                child: MenuList(),
-              ),
-            ),
+            Flexible(flex: 3, fit: FlexFit.loose, child: MenuList()),
             // Botom secret menu :
             const MoreMenuButton(),
           ],
