@@ -60,7 +60,7 @@ class HomeScreen extends StatelessWidget {
             Slogan(Colors.blueGrey.shade900,
                 'T R A D I T I O N A L - R E C I P I E', 'Affordable Bills'),
             // Tables Food :
-            Flexible(flex: 3, fit: FlexFit.loose, child: MenuList()),
+            Flexible(fit: FlexFit.loose, child: MenuList()),
             // Botom secret menu :
             const MoreMenuButton(),
           ],

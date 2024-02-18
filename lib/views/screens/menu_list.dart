@@ -51,7 +51,7 @@ class MenuList extends StatelessWidget {
       width: double.infinity,
       height: 620,
       child: GridView.builder(
-        physics: const BouncingScrollPhysics(),
+        // physics: const BouncingScrollPhysics(),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           crossAxisSpacing: 5.0,
