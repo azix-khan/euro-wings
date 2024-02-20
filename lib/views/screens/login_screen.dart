@@ -42,7 +42,7 @@ class _LoginPageState extends State<LoginPage> {
                 // Implement authentication logic here
                 // For simplicity, assume the login is always successful
                 Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => ItemsScreen()),
+                  MaterialPageRoute(builder: (context) => AdminHomeScreen()),
                 );
               },
               child: const Text('Login'),

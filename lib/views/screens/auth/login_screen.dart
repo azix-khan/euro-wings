@@ -50,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
         // ignore: use_build_context_synchronously
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => ItemsScreen()),
+          MaterialPageRoute(builder: (context) => AdminHomeScreen()),
         );
       }
     } catch (error) {

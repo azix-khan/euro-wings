@@ -1,161 +1,103 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:euro_wings/constants/colors.dart';
-import 'package:euro_wings/constants/fonts.dart';
-import 'package:euro_wings/views/custom_widgets/widgets/utils/delete_dialog.dart';
-import 'package:euro_wings/views/screens/AdminPanel/update_item_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-// ignore: must_be_immutable
 class ItemDetailsScreen extends StatelessWidget {
-  ItemDetailsScreen(this.itemId, {Key? key}) : super(key: key) {
-    _reference = FirebaseFirestore.instance.collection('foodItems').doc(itemId);
-    _futureData = _reference.get();
-  }
+  final String categoryName;
+  final String itemId;
 
-  String itemId;
-  late DocumentReference _reference;
+  ItemDetailsScreen({required this.categoryName, required this.itemId});
 
-  late Future<DocumentSnapshot> _futureData;
-  late Map data;
+  final CollectionReference _itemsReference =
+      FirebaseFirestore.instance.collection('categories');
 
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.sizeOf(context).height * 1;
-    final width = MediaQuery.sizeOf(context).width * 1;
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Item Details',
-        ),
-        leading: InkWell(
-            onTap: () {
-              Navigator.of(context).pop();
-            },
-            child: const Icon(
-              Icons.arrow_back_ios_new,
-            )),
+        title: Text('Item Details'),
       ),
-      body: FutureBuilder<DocumentSnapshot>(
-        future: _futureData,
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.hasError) {
-            return Center(child: Text('Some error occurred ${snapshot.error}'));
+      body: StreamBuilder<DocumentSnapshot>(
+        stream: _itemsReference
+            .doc(categoryName)
+            .collection('items')
+            .doc(itemId)
+            .snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const CircularProgressIndicator();
           }
 
-          if (snapshot.hasData) {
-            //Get the data
-            DocumentSnapshot documentSnapshot = snapshot.data;
-            data = documentSnapshot.data() as Map;
+          var itemData = snapshot.data!.data() as Map<String, dynamic>? ?? {};
+          var itemName = itemData['name'] as String? ?? '';
+          var itemPrice = itemData['price'] as String? ?? '';
+          var itemDescription = itemData['description'] as String? ?? '';
+          var itemImage = itemData['image'] as String? ?? '';
 
-            //display the data
-            return Stack(
-              children: [
-                Container(
-                  child: SizedBox(
-                    height: height * .45,
-                    width: width,
-                    child: ClipRRect(
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(30),
-                        topRight: Radius.circular(30),
-                      ),
-                      child: CachedNetworkImage(
-                        imageUrl: data['image'],
-                        fit: BoxFit.cover,
-                        placeholder: (context, url) => const Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                      ),
-                    ),
-                  ),
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(
+                height: 200,
+                child: Image.network(
+                  itemImage,
+                  fit: BoxFit.cover,
                 ),
-                Container(
-                  height: height * 0.6,
-                  margin: EdgeInsets.only(top: height * .4),
-                  padding: const EdgeInsets.only(top: 20, right: 20, left: 20),
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(30),
-                      topRight: Radius.circular(30),
+              ),
+              Container(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      itemName,
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
+                    const SizedBox(height: 8),
+                    Text(
+                      'Price: $itemPrice',
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      'Description: $itemDescription',
+                      style: const TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      // Implement update item functionality
+                      // Navigate to the update item screen
+                    },
+                    child: const Text('Update Item'),
                   ),
-                  child: ListView(
-                    children: [
-                      Center(
-                        child: Text('${data['name']}',
-                            style: textTheme.headlineLarge),
-                      ),
-                      SizedBox(
-                        height: height * .02,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20.0),
-                                ),
-                                backgroundColor: Colors.red),
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return DeleteItemDialog(
-                                    context: context,
-                                    reference: _reference,
-                                  ).build();
-                                },
-                              );
-                            },
-                            child: Text(
-                              'Delete',
-                              style: TextStyle(color: whiteColor),
-                            ),
-                          ),
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20.0),
-                                ),
-                                backgroundColor: greenColor),
-                            onPressed: () {
-                              //add the id to the map
-                              data['id'] = itemId;
-
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) =>
-                                      UpdateItemScreen(data)));
-                            },
-                            child: Text(
-                              'Update',
-                              style: TextStyle(color: whiteColor),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: height * .03,
-                      ),
-                      Center(
-                        child: Text(
-                          'Price: ${data['price']}',
-                          style: textTheme.bodyLarge,
-                        ),
-                      ),
-                      const Divider(),
-                      Text('Description: \n\n${data['description']}',
-                          style: textTheme.titleLarge),
-                    ],
+                  ElevatedButton(
+                    onPressed: () {
+                      // Implement delete item functionality
+                      // Show a confirmation dialog before deleting
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.red, // Change the button color to red
+                    ),
+                    child: const Text('Delete Item'),
                   ),
-                )
-              ],
-            );
-          }
-
-          return const Center(child: CircularProgressIndicator());
+                ],
+              ),
+            ],
+          );
         },
       ),
     );
