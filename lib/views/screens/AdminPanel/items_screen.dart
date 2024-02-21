@@ -1,3 +1,5 @@
+import 'package:euro_wings/constants/colors.dart';
+import 'package:euro_wings/constants/themes.dart';
 import 'package:euro_wings/views/screens/AdminPanel/add_item_screen.dart';
 import 'package:euro_wings/views/screens/AdminPanel/new_category_screen.dart';
 import 'package:euro_wings/views/screens/AdminPanel/setected_category_screen.dart';
@@ -11,6 +13,7 @@ class AdminHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: whiteColor,
       appBar: AppBar(
         title: const Text('Categories'),
       ),
@@ -75,6 +78,7 @@ class AdminHomeScreen extends StatelessWidget {
         },
       ),
       bottomNavigationBar: BottomAppBar(
+        color: Color(0xff002244),
         child: Row(
           children: [
             TextButton(
@@ -84,6 +88,8 @@ class AdminHomeScreen extends StatelessWidget {
               },
               child: Text(
                 'Add Item',
+                style: TextStyle(
+                    color: primary, fontWeight: FontWeight.bold, fontSize: 18),
               ),
             ),
             Spacer(),
@@ -96,6 +102,8 @@ class AdminHomeScreen extends StatelessWidget {
               },
               child: Text(
                 'Add Category',
+                style: TextStyle(
+                    color: primary, fontWeight: FontWeight.bold, fontSize: 18),
               ),
             ),
           ],

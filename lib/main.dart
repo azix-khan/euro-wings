@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             theme: personaliteTheme,
             debugShowCheckedModeBanner: false,
-            home: AdminHomeScreen(),
+            home: const SplashScreen(),
           );
         });
   }

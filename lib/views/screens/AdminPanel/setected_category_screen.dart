@@ -1,3 +1,4 @@
+import 'package:euro_wings/constants/colors.dart';
 import 'package:euro_wings/views/screens/AdminPanel/items_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -24,7 +25,9 @@ class SelectedCategoryScreen extends StatelessWidget {
             .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
-            return const CircularProgressIndicator();
+            return CircularProgressIndicator(
+              color: orangeColor,
+            );
           }
 
           var items = snapshot.data!.docs;
@@ -44,6 +47,7 @@ class SelectedCategoryScreen extends StatelessWidget {
                   var categoryImage = categoryData['image'] as String? ?? '';
 
                   return Container(
+                    // image container
                     height: 200,
                     child: FutureBuilder(
                       future: firebase_storage.FirebaseStorage.instance
@@ -52,7 +56,9 @@ class SelectedCategoryScreen extends StatelessWidget {
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return CircularProgressIndicator();
+                          return CircularProgressIndicator(
+                            color: orangeColor,
+                          );
                         }
                         if (snapshot.hasError) {
                           return Text('Error: ${snapshot.error}');
@@ -68,6 +74,7 @@ class SelectedCategoryScreen extends StatelessWidget {
                 },
               ),
               Container(
+                // name list present in firebase
                 padding: const EdgeInsets.all(16.0),
                 child: Text(
                   categoryName,
@@ -90,7 +97,7 @@ class SelectedCategoryScreen extends StatelessWidget {
                         title: Text(item['name'] as String? ?? ''),
                         subtitle: Text(item['description'] as String? ?? ''),
                         trailing: Text('\$${item['price'] as String? ?? ''}'),
-                        // You can customize the ListTile as needed
+                        // letter i customize the ListTile
                         onTap: () {
                           Navigator.push(
                             context,
