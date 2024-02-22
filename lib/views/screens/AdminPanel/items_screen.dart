@@ -10,18 +10,25 @@ class AdminHomeScreen extends StatelessWidget {
   final CollectionReference _categoriesReference =
       FirebaseFirestore.instance.collection('categories');
 
+  AdminHomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: whiteColor,
       appBar: AppBar(
-        title: const Text('Categories'),
+        title: Text(
+          'Categories',
+          style: TextStyle(color: greenColor),
+        ),
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: _categoriesReference.snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
-            return const CircularProgressIndicator();
+            return CircularProgressIndicator(
+              color: orangeColor,
+            );
           }
 
           var categories = snapshot.data!.docs;
@@ -60,6 +67,7 @@ class AdminHomeScreen extends StatelessWidget {
                         ),
                       ),
                       Container(
+                        color: greenColor,
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
                           category.get('name'),
@@ -78,29 +86,31 @@ class AdminHomeScreen extends StatelessWidget {
         },
       ),
       bottomNavigationBar: BottomAppBar(
-        color: Color(0xff002244),
+        color: const Color(0xff002244),
         child: Row(
           children: [
-            TextButton(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => AddItemScreen()));
-              },
-              child: Text(
-                'Add Item',
-                style: TextStyle(
-                    color: primary, fontWeight: FontWeight.bold, fontSize: 18),
-              ),
-            ),
-            Spacer(),
             TextButton(
               onPressed: () {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => AddCategoryScreen()));
+                        builder: (context) => const AddItemScreen()));
               },
-              child: Text(
+              child: const Text(
+                'Add Item',
+                style: TextStyle(
+                    color: primary, fontWeight: FontWeight.bold, fontSize: 18),
+              ),
+            ),
+            const Spacer(),
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const AddCategoryScreen()));
+              },
+              child: const Text(
                 'Add Category',
                 style: TextStyle(
                     color: primary, fontWeight: FontWeight.bold, fontSize: 18),
