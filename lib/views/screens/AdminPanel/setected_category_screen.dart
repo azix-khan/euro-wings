@@ -6,8 +6,10 @@ import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class SelectedCategoryScreen extends StatelessWidget {
   final String categoryName;
+  final String categoryImage;
 
-  SelectedCategoryScreen({required this.categoryName});
+  SelectedCategoryScreen(
+      {required this.categoryName, required this.categoryImage});
 
   final CollectionReference _categoriesReference =
       FirebaseFirestore.instance.collection('categories');
@@ -18,108 +20,78 @@ class SelectedCategoryScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(categoryName),
       ),
-      body: StreamBuilder<QuerySnapshot>(
-        stream: _categoriesReference
-            .doc(categoryName)
-            .collection('items')
-            .snapshots(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return CircularProgressIndicator(
-              color: orangeColor,
-            );
-          }
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            child: Container(
+              height: 200,
+              child: Image.network(categoryImage),
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(
+              categoryName,
+              style: const TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          Expanded(
+            child: _buildItemsList(categoryName),
+          ),
+        ],
+      ),
+    );
+  }
 
-          var items = snapshot.data!.docs;
+  // list of items in each category
+  Widget _buildItemsList(String categoryName) {
+    return StreamBuilder<QuerySnapshot>(
+      stream: _categoriesReference
+          .doc(categoryName)
+          .collection('items')
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator(color: orangeColor));
+        }
 
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              FutureBuilder<DocumentSnapshot>(
-                future: _categoriesReference.doc(categoryName).get(),
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData) {
-                    return Container(); // Placeholder for loading image
-                  }
+        if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        }
 
-                  var categoryData =
-                      snapshot.data!.data() as Map<String, dynamic>? ?? {};
-                  var categoryImage = categoryData['image'] as String? ?? '';
+        var items = snapshot.data!.docs;
 
-                  return Container(
-                    // image container
-                    height: 200,
-                    child: FutureBuilder(
-                      future: firebase_storage.FirebaseStorage.instance
-                          .ref(categoryImage)
-                          .getDownloadURL(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return Center(
-                            child: CircularProgressIndicator(
-                              color: greenColor,
-                            ),
-                          );
-                        }
-                        if (snapshot.hasError) {
-                          return Text('Error: ${snapshot.error}');
-                        }
-
-                        return Image.network(
-                          snapshot.data.toString(),
-                          fit: BoxFit.cover,
-                        );
-                      },
+        return ListView.builder(
+          itemCount: items.length,
+          itemBuilder: (context, index) {
+            var item = items[index].data() as Map<String, dynamic>? ?? {};
+            return Card(
+              elevation: 5,
+              margin: const EdgeInsets.all(10.0),
+              child: ListTile(
+                title: Text(item['name'] as String? ?? ''),
+                subtitle: Text(item['description'] as String? ?? ''),
+                trailing: Text('\$${item['price'] as String? ?? ''}'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ItemDetailsScreen(
+                        categoryName: categoryName,
+                        itemId: items[index].id,
+                      ),
                     ),
                   );
                 },
               ),
-              Container(
-                // name list present in firebase
-                padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  categoryName,
-                  style: const TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: items.length,
-                  itemBuilder: (context, index) {
-                    var item =
-                        items[index].data() as Map<String, dynamic>? ?? {};
-                    return Card(
-                      elevation: 5,
-                      margin: const EdgeInsets.all(10.0),
-                      child: ListTile(
-                        title: Text(item['name'] as String? ?? ''),
-                        subtitle: Text(item['description'] as String? ?? ''),
-                        trailing: Text('\$${item['price'] as String? ?? ''}'),
-                        // letter i customize the ListTile
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ItemDetailsScreen(
-                                categoryName: categoryName,
-                                itemId: items[index].id,
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ],
-          );
-        },
-      ),
+            );
+          },
+        );
+      },
     );
   }
 }

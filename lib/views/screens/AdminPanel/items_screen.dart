@@ -52,6 +52,7 @@ class AdminHomeScreen extends StatelessWidget {
                     MaterialPageRoute(
                       builder: (context) => SelectedCategoryScreen(
                         categoryName: category.get('name'),
+                        categoryImage: category.get('image'),
                       ),
                     ),
                   );
