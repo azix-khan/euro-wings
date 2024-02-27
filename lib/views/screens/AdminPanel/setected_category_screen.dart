@@ -2,7 +2,6 @@ import 'package:euro_wings/constants/colors.dart';
 import 'package:euro_wings/views/screens/AdminPanel/items_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class SelectedCategoryScreen extends StatelessWidget {
   final String categoryName;
