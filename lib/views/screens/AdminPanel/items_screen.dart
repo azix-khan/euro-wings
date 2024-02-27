@@ -26,8 +26,10 @@ class AdminHomeScreen extends StatelessWidget {
         stream: _categoriesReference.snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
-            return CircularProgressIndicator(
-              color: orangeColor,
+            return Center(
+              child: CircularProgressIndicator(
+                color: greenColor,
+              ),
             );
           }
 

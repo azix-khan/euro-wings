@@ -56,8 +56,10 @@ class SelectedCategoryScreen extends StatelessWidget {
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return CircularProgressIndicator(
-                            color: orangeColor,
+                          return Center(
+                            child: CircularProgressIndicator(
+                              color: greenColor,
+                            ),
                           );
                         }
                         if (snapshot.hasError) {
