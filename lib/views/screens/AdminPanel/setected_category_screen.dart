@@ -8,7 +8,7 @@ class SelectedCategoryScreen extends StatelessWidget {
   final String categoryImage;
 
   SelectedCategoryScreen(
-      {required this.categoryName, required this.categoryImage});
+      {super.key, required this.categoryName, required this.categoryImage});
 
   final CollectionReference _categoriesReference =
       FirebaseFirestore.instance.collection('categories');

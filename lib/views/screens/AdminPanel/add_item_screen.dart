@@ -229,10 +229,12 @@ class _AddItemScreenState extends State<AddItemScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => AddCategoryScreen()));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const AddCategoryScreen()));
         },
-        child: Text("Category"),
+        child: const Text("Category"),
       ),
     );
   }

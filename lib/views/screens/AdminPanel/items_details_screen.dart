@@ -5,7 +5,8 @@ class ItemDetailsScreen extends StatelessWidget {
   final String categoryName;
   final String itemId;
 
-  ItemDetailsScreen({required this.categoryName, required this.itemId});
+  ItemDetailsScreen(
+      {super.key, required this.categoryName, required this.itemId});
 
   final CollectionReference _itemsReference =
       FirebaseFirestore.instance.collection('categories');
@@ -14,7 +15,7 @@ class ItemDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Item Details'),
+        title: const Text('Item Details'),
       ),
       body: StreamBuilder<DocumentSnapshot>(
         stream: _itemsReference
@@ -90,7 +91,8 @@ class ItemDetailsScreen extends StatelessWidget {
                       // Show a confirmation dialog before deleting
                     },
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.red, // Change the button color to red
+                      backgroundColor:
+                          Colors.red, // Change the button color to red
                     ),
                     child: const Text('Delete Item'),
                   ),
