@@ -121,6 +121,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                         'name': _controllerName.text,
                         'image': imageUrl,
                       });
+                      Utils().toastMessage("${_controllerName.text} added");
 
                       Navigator.of(context).pop();
                     }

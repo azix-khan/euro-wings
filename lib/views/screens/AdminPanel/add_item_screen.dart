@@ -217,6 +217,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                         'description': itemdesc,
                         'image': imageUrl,
                       });
+                      Utils().toastMessage("Item added in ${selectedCategory}");
 
                       Navigator.of(context).pop();
                     }

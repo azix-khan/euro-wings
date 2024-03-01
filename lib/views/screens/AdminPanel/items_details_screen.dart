@@ -1,3 +1,4 @@
+import 'package:euro_wings/constants/colors.dart';
 import 'package:euro_wings/views/screens/AdminPanel/update_item_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -24,8 +25,12 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: whiteColor,
       appBar: AppBar(
-        title: const Text('Item Details'),
+        title: Text(
+          'Item Details',
+          style: TextStyle(color: greenColor),
+        ),
       ),
       body: StreamBuilder<DocumentSnapshot>(
         stream: _itemsReference
@@ -72,10 +77,10 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
                   children: [
                     Text(
                       itemName,
-                      style: const TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: greenColor),
                     ),
                     const SizedBox(height: 8.0),
                     Text(

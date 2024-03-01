@@ -18,11 +18,11 @@ ThemeData personaliteTheme = ThemeData.light().copyWith(
   // scaffoldBackgroundColor: Color(0xffC4EAFF),
   appBarTheme: AppBarTheme(
     backgroundColor: Colors.transparent,
-    titleTextStyle: TextStyle(
-        color: orangeColor, fontSize: 20, fontWeight: FontWeight.w500),
+    titleTextStyle:
+        TextStyle(color: greenColor, fontSize: 20, fontWeight: FontWeight.w500),
     centerTitle: true,
     elevation: 0,
-    iconTheme: const IconThemeData(color: primary),
+    iconTheme: IconThemeData(color: greenColor),
     systemOverlayStyle: SystemUiOverlayStyle.dark,
   ),
 );

@@ -1,8 +1,11 @@
 import 'package:euro_wings/constants/colors.dart';
 import 'package:euro_wings/constants/themes.dart';
+import 'package:euro_wings/views/custom_widgets/widgets/utils/utils.dart';
 import 'package:euro_wings/views/screens/AdminPanel/add_item_screen.dart';
 import 'package:euro_wings/views/screens/AdminPanel/new_category_screen.dart';
 import 'package:euro_wings/views/screens/AdminPanel/setected_category_screen.dart';
+import 'package:euro_wings/views/screens/auth/login_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -11,6 +14,7 @@ class AdminHomeScreen extends StatelessWidget {
       FirebaseFirestore.instance.collection('categories');
 
   AdminHomeScreen({super.key});
+  final FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +25,24 @@ class AdminHomeScreen extends StatelessWidget {
           'Categories',
           style: TextStyle(color: greenColor),
         ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              auth.signOut().then((value) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const LoginScreen(),
+                  ),
+                );
+              }).onError((error, stackTrace) {
+                Utils().toastMessage(error.toString());
+              });
+            },
+            icon: const Icon(Icons.logout),
+            tooltip: 'Sign Out',
+          ),
+        ],
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: _categoriesReference.snapshots(),
@@ -89,7 +111,7 @@ class AdminHomeScreen extends StatelessWidget {
         },
       ),
       bottomNavigationBar: BottomAppBar(
-        color: const Color(0xff002244),
+        color: greenColor,
         child: Row(
           children: [
             TextButton(
@@ -99,10 +121,12 @@ class AdminHomeScreen extends StatelessWidget {
                     MaterialPageRoute(
                         builder: (context) => const AddItemScreen()));
               },
-              child: const Text(
+              child: Text(
                 'Add Item',
                 style: TextStyle(
-                    color: primary, fontWeight: FontWeight.bold, fontSize: 18),
+                    color: blackColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18),
               ),
             ),
             const Spacer(),
@@ -113,10 +137,12 @@ class AdminHomeScreen extends StatelessWidget {
                     MaterialPageRoute(
                         builder: (context) => const AddCategoryScreen()));
               },
-              child: const Text(
+              child: Text(
                 'Add Category',
                 style: TextStyle(
-                    color: primary, fontWeight: FontWeight.bold, fontSize: 18),
+                    color: blackColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18),
               ),
             ),
           ],
