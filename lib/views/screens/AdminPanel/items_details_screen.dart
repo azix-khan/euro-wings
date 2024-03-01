@@ -56,7 +56,7 @@ class ItemDetailsScreen extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 8.0),
                     Text(
                       'Price: $itemPrice',
                       style: const TextStyle(
@@ -64,7 +64,7 @@ class ItemDetailsScreen extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 8.0),
                     Text(
                       'Description: $itemDescription',
                       style: const TextStyle(

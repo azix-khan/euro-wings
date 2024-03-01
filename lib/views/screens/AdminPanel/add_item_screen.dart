@@ -121,8 +121,9 @@ class _AddItemScreenState extends State<AddItemScreen> {
                           child: Text(category.get('name')),
                         );
                       }).toList(),
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(
+                      decoration: InputDecoration(
+                        fillColor: greenColor,
+                        border: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(20)),
                         ),
                         labelText: 'Select Category',
