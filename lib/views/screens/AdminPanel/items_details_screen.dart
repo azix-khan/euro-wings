@@ -1,4 +1,5 @@
 import 'package:euro_wings/constants/colors.dart';
+import 'package:euro_wings/views/custom_widgets/widgets/utils/utils.dart';
 import 'package:euro_wings/views/screens/AdminPanel/update_item_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -146,6 +147,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(true);
+                Utils().toastMessage("Item deleted");
               },
               child: const Text('Delete'),
             ),
