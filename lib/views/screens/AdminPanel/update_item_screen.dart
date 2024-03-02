@@ -1,10 +1,13 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:euro_wings/constants/colors.dart';
+import 'package:euro_wings/views/custom_widgets/custom_text_form_field.dart';
 import 'package:euro_wings/views/custom_widgets/widgets/utils/utils.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../../custom_widgets/widgets/round_button.dart';
 
 class UpdateItemScreen extends StatefulWidget {
   final Map? foodItem;
@@ -25,6 +28,7 @@ class UpdateItemScreenState extends State<UpdateItemScreen> {
   final GlobalKey<FormState> _key = GlobalKey();
   String imageUrl = '';
   bool isUpdatingImage = false;
+  bool loading = false;
 
   @override
   void initState() {
@@ -62,60 +66,52 @@ class UpdateItemScreenState extends State<UpdateItemScreen> {
             key: _key,
             child: Column(
               children: [
-                Container(
-                  // height: 120,
-                  // width: 240,
-                  // decoration: BoxDecoration(
-                  //   border: Border.all(color: backgroundColor),
-                  // ),
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      if (imageUrl.isNotEmpty)
-                        CircleAvatar(
-                          radius: 60,
-                          backgroundImage: NetworkImage(imageUrl),
-                        ),
-                      Positioned(
-                        top: 0,
-                        right: 0,
-                        child: GestureDetector(
-                          onTap: () async {
-                            ImagePicker imagePicker = ImagePicker();
-                            XFile? file = await imagePicker.pickImage(
-                              source: ImageSource.gallery,
-                            );
+                Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    if (imageUrl.isNotEmpty)
+                      CircleAvatar(
+                        radius: 100.0,
+                        backgroundImage: NetworkImage(imageUrl),
+                      ),
+                    Positioned(
+                      top: 0,
+                      right: 0,
+                      child: GestureDetector(
+                        onTap: () async {
+                          ImagePicker imagePicker = ImagePicker();
+                          XFile? file = await imagePicker.pickImage(
+                            source: ImageSource.gallery,
+                          );
 
-                            if (file != null) {
-                              _updateImageUrl(file);
-                            }
-                          },
-                          child: CircleAvatar(
-                            radius: 20,
-                            backgroundColor: Colors.transparent,
-                            child: Icon(
-                              isUpdatingImage ? Icons.done : Icons.photo_camera,
-                              size: 20,
-                              color:
-                                  isUpdatingImage ? Colors.green : greenColor,
-                            ),
+                          if (file != null) {
+                            _updateImageUrl(file);
+                          }
+                        },
+                        child: CircleAvatar(
+                          radius: 25,
+                          backgroundColor: Colors.transparent,
+                          child: Icon(
+                            isUpdatingImage ? Icons.done : Icons.photo_camera,
+                            size: 30,
+                            color: isUpdatingImage ? Colors.green : greenColor,
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
                 const SizedBox(
                   height: 18,
                 ),
-                TextFormField(
+                CustomTextFormField(
                   controller: _controllerName,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                    ),
-                    labelText: 'Name',
+                  prefixIcon: Icon(
+                    Icons.production_quantity_limits,
+                    color: greenColor,
                   ),
+                  labelText: 'Name',
+                  hintText: 'Enter Name',
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter the item name';
@@ -126,14 +122,14 @@ class UpdateItemScreenState extends State<UpdateItemScreen> {
                 const SizedBox(
                   height: 18,
                 ),
-                TextFormField(
+                CustomTextFormField(
                   controller: _controllerPrice,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                    ),
-                    labelText: 'Price',
+                  prefixIcon: Icon(
+                    Icons.price_check,
+                    color: greenColor,
                   ),
+                  labelText: 'Price',
+                  hintText: 'Enter Price',
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter the item price';
@@ -144,14 +140,14 @@ class UpdateItemScreenState extends State<UpdateItemScreen> {
                 const SizedBox(
                   height: 18,
                 ),
-                TextFormField(
+                CustomTextFormField(
                   controller: _controllerDesc,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                    ),
-                    labelText: 'Description',
+                  prefixIcon: Icon(
+                    Icons.description_outlined,
+                    color: greenColor,
                   ),
+                  labelText: 'Description',
+                  hintText: 'Enter Description',
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter the item description';
@@ -162,14 +158,14 @@ class UpdateItemScreenState extends State<UpdateItemScreen> {
                 const SizedBox(
                   height: 18,
                 ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                    backgroundColor: greenColor,
-                  ),
-                  onPressed: () async {
+                RoundButton(
+                  loading: loading,
+                  title: 'Update',
+                  onTap: () async {
+                    setState(() {
+                      loading = true;
+                    });
+
                     if (_key.currentState!.validate()) {
                       String name = _controllerName.text;
                       String price = _controllerPrice.text;
@@ -186,13 +182,14 @@ class UpdateItemScreenState extends State<UpdateItemScreen> {
                       // Call update()
                       _reference.update(dataToUpdate);
                       Utils().toastMessage('Item Updated');
+
+                      setState(() {
+                        loading = false;
+                      });
+
                       Navigator.of(context).pop();
                     }
                   },
-                  child: Text(
-                    'Update',
-                    style: TextStyle(color: whiteColor),
-                  ),
                 ),
               ],
             ),

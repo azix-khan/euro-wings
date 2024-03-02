@@ -1,21 +1,27 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 
 import 'package:euro_wings/constants/colors.dart';
+import 'package:euro_wings/views/custom_widgets/custom_text_form_field.dart';
 import 'package:euro_wings/views/custom_widgets/widgets/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
+import '../../custom_widgets/widgets/round_button.dart';
+
 class AddCategoryScreen extends StatefulWidget {
   const AddCategoryScreen({Key? key}) : super(key: key);
 
   @override
-  _AddCategoryScreenState createState() => _AddCategoryScreenState();
+  AddCategoryScreenState createState() => AddCategoryScreenState();
 }
 
-class _AddCategoryScreenState extends State<AddCategoryScreen> {
+class AddCategoryScreenState extends State<AddCategoryScreen> {
   final TextEditingController _controllerName = TextEditingController();
+  bool loading = false;
 
   GlobalKey<FormState> key = GlobalKey();
 
@@ -23,7 +29,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
       FirebaseFirestore.instance.collection('categories');
 
   String imageUrl = '';
-
+  // image uploading method
   Future<void> _uploadImage() async {
     ImagePicker imagePicker = ImagePicker();
     XFile? file = await imagePicker.pickImage(source: ImageSource.gallery);
@@ -90,13 +96,12 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                 const SizedBox(
                   height: 18,
                 ),
-                TextFormField(
+                // text form field
+                CustomTextFormField(
                   controller: _controllerName,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                    ),
-                    labelText: 'Enter the new category name',
+                  prefixIcon: Icon(
+                    Icons.category_outlined,
+                    color: greenColor,
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
@@ -104,30 +109,47 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                     }
                     return null;
                   },
+                  hintText: 'Enter the new category name',
+                  labelText: 'Category Name',
                 ),
                 const SizedBox(
                   height: 18,
                 ),
-                ElevatedButton(
-                  onPressed: () async {
-                    if (imageUrl.isEmpty) {
+                // button
+                RoundButton(
+                  loading: loading,
+                  title: 'Add Category',
+                  onTap: () async {
+                    setState(() {
+                      loading = true;
+                    });
+
+                    if (imageUrl.isEmpty && !key.currentState!.validate()) {
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                          content: Text('Please upload an image')));
+                        content: Text('Please upload an image'),
+                      ));
+                      setState(() {
+                        loading = false;
+                      });
                       return;
                     }
 
-                    if (key.currentState!.validate()) {
+                    if (key.currentState!.validate() &&
+                        key.currentState!.validate()) {
                       await _categoriesReference.add({
                         'name': _controllerName.text,
                         'image': imageUrl,
                       });
                       Utils().toastMessage("${_controllerName.text} added");
 
+                      setState(() {
+                        loading = false;
+                      });
+
                       Navigator.of(context).pop();
                     }
                   },
-                  child: const Text('Add Category'),
-                )
+                ),
               ],
             ),
           ),

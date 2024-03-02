@@ -1,3 +1,5 @@
+import 'package:euro_wings/constants/colors.dart';
+import 'package:euro_wings/views/custom_widgets/custom_text_form_field.dart';
 import 'package:euro_wings/views/custom_widgets/widgets/round_button.dart';
 import 'package:euro_wings/views/custom_widgets/widgets/utils/utils.dart';
 import 'package:euro_wings/views/screens/AdminPanel/items_screen.dart';
@@ -78,9 +80,9 @@ class _LoginScreenState extends State<LoginScreen> {
           leading: InkWell(
               onTap: () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const HomeScreen()));
+                  context,
+                  MaterialPageRoute(builder: (context) => const HomeScreen()),
+                );
               },
               child: const Icon(
                 Icons.arrow_back_ios_new,
@@ -99,7 +101,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 250,
                     child: Image.asset('images/login.png'),
                   ),
-                  TextFormField(
+                  // email form field
+                  CustomTextFormField(
                     controller: emailController,
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -113,21 +116,21 @@ class _LoginScreenState extends State<LoginScreen> {
                       }
                       return null;
                     },
-                    decoration: InputDecoration(
-                      hintText: 'Email',
-                      prefixIcon: const Icon(Icons.email),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
+                    prefixIcon: Icon(
+                      Icons.email,
+                      color: greenColor,
                     ),
+                    hintText: 'Email',
+                    labelText: 'Enter Email',
                     keyboardType: TextInputType.emailAddress,
                   ),
                   const SizedBox(
                     height: 20,
                   ),
-                  TextFormField(
+                  // password form field
+                  CustomTextFormField(
                     controller: passwordController,
-                    obscureText: true,
+                    obscure: true,
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Password Required';
@@ -140,18 +143,18 @@ class _LoginScreenState extends State<LoginScreen> {
                       }
                       return null;
                     },
-                    decoration: InputDecoration(
-                      hintText: 'Password',
-                      prefixIcon: const Icon(Icons.lock_open),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                    ),
                     keyboardType: TextInputType.visiblePassword,
+                    prefixIcon: Icon(
+                      Icons.lock_open,
+                      color: greenColor,
+                    ),
+                    hintText: 'Password',
+                    labelText: 'Enter Password',
                   ),
                   const SizedBox(
                     height: 30,
                   ),
+                  // button
                   RoundButton(
                     loading: loading,
                     title: 'Login',
@@ -166,18 +169,25 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: TextButton(
                       onPressed: () {
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    const ForgotPasswordScreen()));
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const ForgotPasswordScreen()),
+                        );
                       },
-                      child: const Text("Forgot Password"),
+                      child: Text(
+                        "Forgot Password",
+                        style: TextStyle(color: greenColor),
+                      ),
                     ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text("Don't have an account?"),
+                      Text(
+                        "Don't have an account?",
+                        style: TextStyle(color: greenColor),
+                      ),
                       TextButton(
                         onPressed: () {
                           Navigator.push(
@@ -187,7 +197,10 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           );
                         },
-                        child: const Text("Sign Up"),
+                        child: Text(
+                          "Sign Up",
+                          style: TextStyle(color: greenColor),
+                        ),
                       ),
                     ],
                   ),

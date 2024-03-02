@@ -3,6 +3,8 @@ import 'package:euro_wings/views/custom_widgets/widgets/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../../../constants/colors.dart';
+
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
 
@@ -41,9 +43,24 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             children: [
               TextFormField(
                 controller: emailController,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20))),
+                decoration: InputDecoration(
+                  prefixIcon: Icon(
+                    Icons.email,
+                    color: greenColor,
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: greenColor),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: greenColor),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  border: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(20),
+                    ),
+                  ),
                   hintText: 'Enter Email to Recover',
                 ),
                 keyboardType: TextInputType.emailAddress,

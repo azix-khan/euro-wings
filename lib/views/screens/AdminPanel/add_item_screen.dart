@@ -2,11 +2,12 @@ import 'dart:io';
 
 import 'package:euro_wings/constants/colors.dart';
 import 'package:euro_wings/views/custom_widgets/widgets/utils/utils.dart';
-import 'package:euro_wings/views/screens/AdminPanel/new_category_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+
+import '../../custom_widgets/widgets/round_button.dart';
 
 class AddItemScreen extends StatefulWidget {
   const AddItemScreen({Key? key}) : super(key: key);
@@ -19,6 +20,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
   final TextEditingController _controllerName = TextEditingController();
   final TextEditingController _controllerPrice = TextEditingController();
   final TextEditingController _controllerDesc = TextEditingController();
+  bool loading = false;
 
   GlobalKey<FormState> key = GlobalKey();
 
@@ -194,11 +196,51 @@ class _AddItemScreenState extends State<AddItemScreen> {
                 const SizedBox(
                   height: 18,
                 ),
-                ElevatedButton(
-                  onPressed: () async {
+                // ElevatedButton(
+                //   onPressed: () async {
+                //     if (imageUrl.isEmpty) {
+                //       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                //           content: Text('Please upload an image')));
+                //       return;
+                //     }
+
+                //     if (key.currentState!.validate()) {
+                //       String itemName = _controllerName.text;
+                //       String itemPrice = _controllerPrice.text;
+                //       String itemdesc = _controllerDesc.text;
+
+                //       // Add the item to the 'items' subcollection of the selected category
+                //       await _categoriesReference
+                //           .doc(selectedCategory)
+                //           .collection('items')
+                //           .add({
+                //         'name': itemName,
+                //         'price': itemPrice,
+                //         'description': itemdesc,
+                //         'image': imageUrl,
+                //       });
+                //       Utils().toastMessage("Item added in ${selectedCategory}");
+
+                //       Navigator.of(context).pop();
+                //     }
+                //   },
+                //   child: const Text('Add Item'),
+                // ),
+                RoundButton(
+                  loading: loading,
+                  title: 'Add Item',
+                  onTap: () async {
+                    setState(() {
+                      loading = true;
+                    });
+
                     if (imageUrl.isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                          content: Text('Please upload an image')));
+                        content: Text('Please upload an image'),
+                      ));
+                      setState(() {
+                        loading = false;
+                      });
                       return;
                     }
 
@@ -217,26 +259,21 @@ class _AddItemScreenState extends State<AddItemScreen> {
                         'description': itemdesc,
                         'image': imageUrl,
                       });
-                      Utils().toastMessage("Item added in ${selectedCategory}");
+
+                      Utils().toastMessage("Item added in $selectedCategory");
+
+                      setState(() {
+                        loading = false;
+                      });
 
                       Navigator.of(context).pop();
                     }
                   },
-                  child: const Text('Add Item'),
-                )
+                ),
               ],
             ),
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const AddCategoryScreen()));
-        },
-        child: const Text("Category"),
       ),
     );
   }
