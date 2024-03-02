@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:euro_wings/constants/colors.dart';
 import 'package:euro_wings/views/custom_widgets/widgets/utils/utils.dart';
@@ -8,9 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class UpdateItemScreen extends StatefulWidget {
-  final Map _foodItem;
+  final Map? foodItem;
+  final String categoryName;
 
-  const UpdateItemScreen(this._foodItem, {Key? key}) : super(key: key);
+  const UpdateItemScreen({Key? key, required this.categoryName, this.foodItem})
+      : super(key: key);
 
   @override
   UpdateItemScreenState createState() => UpdateItemScreenState();
@@ -23,18 +24,23 @@ class UpdateItemScreenState extends State<UpdateItemScreen> {
   late TextEditingController _controllerDesc;
   final GlobalKey<FormState> _key = GlobalKey();
   String imageUrl = '';
+  bool isUpdatingImage = false;
 
   @override
   void initState() {
     super.initState();
-    _controllerName = TextEditingController(text: widget._foodItem['name']);
-    _controllerPrice = TextEditingController(text: widget._foodItem['price']);
+    _controllerName =
+        TextEditingController(text: widget.foodItem?['name'] ?? '');
+    _controllerPrice =
+        TextEditingController(text: widget.foodItem?['price'] ?? '');
     _controllerDesc =
-        TextEditingController(text: widget._foodItem['description']);
+        TextEditingController(text: widget.foodItem?['description'] ?? '');
     _reference = FirebaseFirestore.instance
-        .collection('foodItems')
-        .doc(widget._foodItem['id']);
-    imageUrl = widget._foodItem['image'];
+        .collection('categories')
+        .doc(widget.categoryName)
+        .collection('items')
+        .doc(widget.foodItem?['id']);
+    imageUrl = widget.foodItem?['image'] ?? '';
   }
 
   @override
@@ -57,14 +63,24 @@ class UpdateItemScreenState extends State<UpdateItemScreen> {
             child: Column(
               children: [
                 Container(
-                  height: 120,
-                  width: 240,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: backgroundColor),
-                  ),
-                  child: imageUrl.isEmpty
-                      ? IconButton(
-                          onPressed: () async {
+                  // height: 120,
+                  // width: 240,
+                  // decoration: BoxDecoration(
+                  //   border: Border.all(color: backgroundColor),
+                  // ),
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      if (imageUrl.isNotEmpty)
+                        CircleAvatar(
+                          radius: 60,
+                          backgroundImage: NetworkImage(imageUrl),
+                        ),
+                      Positioned(
+                        top: 0,
+                        right: 0,
+                        child: GestureDetector(
+                          onTap: () async {
                             ImagePicker imagePicker = ImagePicker();
                             XFile? file = await imagePicker.pickImage(
                               source: ImageSource.gallery,
@@ -74,16 +90,20 @@ class UpdateItemScreenState extends State<UpdateItemScreen> {
                               _updateImageUrl(file);
                             }
                           },
-                          icon: const Icon(
-                            Icons.photo,
-                            size: 55,
-                            color: Colors.blue,
+                          child: CircleAvatar(
+                            radius: 20,
+                            backgroundColor: Colors.transparent,
+                            child: Icon(
+                              isUpdatingImage ? Icons.done : Icons.photo_camera,
+                              size: 20,
+                              color:
+                                  isUpdatingImage ? Colors.green : greenColor,
+                            ),
                           ),
-                        )
-                      : Image.network(
-                          imageUrl,
-                          fit: BoxFit.cover,
                         ),
+                      ),
+                    ],
+                  ),
                 ),
                 const SizedBox(
                   height: 18,
@@ -167,10 +187,12 @@ class UpdateItemScreenState extends State<UpdateItemScreen> {
                       _reference.update(dataToUpdate);
                       Utils().toastMessage('Item Updated');
                       Navigator.of(context).pop();
-                      Navigator.of(context).pop();
                     }
                   },
-                  child: const Text('Update'),
+                  child: Text(
+                    'Update',
+                    style: TextStyle(color: whiteColor),
+                  ),
                 ),
               ],
             ),
@@ -181,6 +203,10 @@ class UpdateItemScreenState extends State<UpdateItemScreen> {
   }
 
   void _updateImageUrl(XFile file) async {
+    setState(() {
+      isUpdatingImage = true;
+    });
+
     String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
 
     Reference referenceImageToUpload =
@@ -189,9 +215,14 @@ class UpdateItemScreenState extends State<UpdateItemScreen> {
     try {
       await referenceImageToUpload.putFile(File(file.path));
       imageUrl = await referenceImageToUpload.getDownloadURL();
-      setState(() {});
+      setState(() {
+        isUpdatingImage = false;
+      });
     } catch (error) {
       Utils().toastMessage(error.toString());
+      setState(() {
+        isUpdatingImage = false;
+      });
     }
   }
 }

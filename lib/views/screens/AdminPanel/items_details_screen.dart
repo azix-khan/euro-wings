@@ -109,6 +109,19 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
                     onPressed: () {
                       // Implement update item functionality
                       // Navigate to the update item screen
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => UpdateItemScreen(
+                                    categoryName: widget.categoryName,
+                                    foodItem: {
+                                      'id': widget.itemId,
+                                      'name': itemName,
+                                      'price': itemPrice,
+                                      'description': itemDescription,
+                                      'image': itemImage,
+                                    },
+                                  )));
                     },
                     child: const Text('Update Item'),
                   ),
