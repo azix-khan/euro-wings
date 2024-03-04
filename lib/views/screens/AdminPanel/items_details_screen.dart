@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:euro_wings/constants/colors.dart';
 import 'package:euro_wings/views/custom_widgets/widgets/utils/utils.dart';
 import 'package:euro_wings/views/screens/AdminPanel/update_item_screen.dart';
@@ -55,7 +57,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Container(
+              SizedBox(
                 height: 200,
                 child: itemImage.isNotEmpty
                     ? Image.network(
@@ -69,7 +71,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
                           color: Colors.red,
                           size: 70,
                         ),
-                      ), // You can replace Placeholder() with any other widget or message
+                      ),
               ),
               Container(
                 padding: const EdgeInsets.all(16.0),
@@ -107,21 +109,23 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                      // Implement update item functionality
+                      // update item function
                       // Navigate to the update item screen
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => UpdateItemScreen(
-                                    categoryName: widget.categoryName,
-                                    foodItem: {
-                                      'id': widget.itemId,
-                                      'name': itemName,
-                                      'price': itemPrice,
-                                      'description': itemDescription,
-                                      'image': itemImage,
-                                    },
-                                  )));
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => UpdateItemScreen(
+                            categoryName: widget.categoryName,
+                            foodItem: {
+                              'id': widget.itemId,
+                              'name': itemName,
+                              'price': itemPrice,
+                              'description': itemDescription,
+                              'image': itemImage,
+                            },
+                          ),
+                        ),
+                      );
                     },
                     child: const Text('Update Item'),
                   ),

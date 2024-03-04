@@ -1,5 +1,4 @@
 import 'package:euro_wings/constants/colors.dart';
-import 'package:euro_wings/constants/themes.dart';
 import 'package:euro_wings/views/custom_widgets/widgets/utils/utils.dart';
 import 'package:euro_wings/views/screens/AdminPanel/add_item_screen.dart';
 import 'package:euro_wings/views/screens/AdminPanel/new_category_screen.dart';
@@ -25,6 +24,7 @@ class AdminHomeScreen extends StatelessWidget {
           'Categories',
           style: TextStyle(color: greenColor),
         ),
+        // sign out function
         actions: [
           IconButton(
             onPressed: () {
@@ -110,6 +110,7 @@ class AdminHomeScreen extends StatelessWidget {
           );
         },
       ),
+      // bottonBar
       bottomNavigationBar: BottomAppBar(
         color: greenColor,
         child: Row(
@@ -117,32 +118,36 @@ class AdminHomeScreen extends StatelessWidget {
             TextButton(
               onPressed: () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const AddItemScreen()));
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const AddItemScreen()),
+                );
               },
               child: Text(
                 'Add Item',
                 style: TextStyle(
-                    color: blackColor,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18),
+                  color: blackColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
               ),
             ),
             const Spacer(),
             TextButton(
               onPressed: () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const AddCategoryScreen()));
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const AddCategoryScreen()),
+                );
               },
               child: Text(
                 'Add Category',
                 style: TextStyle(
-                    color: blackColor,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18),
+                  color: blackColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
               ),
             ),
           ],
