@@ -11,4 +11,4 @@ Color blueColor = const Color(0xff3B94C5);
 
 // linerar gredient sky and white
 
-// Color skyColor = const Color(0xffC4EAFF);
+Color skyColor = const Color(0xffC4EAFF);
