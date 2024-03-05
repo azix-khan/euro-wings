@@ -173,6 +173,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
       },
     );
 
+    // ignore: unnecessary_null_comparison
     if (confirmDelete != null && confirmDelete) {
       await _itemsReference
           .doc(widget.categoryName)
@@ -186,6 +187,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
         await referenceToDelete.delete();
       }
 
+      // ignore: use_build_context_synchronously
       Navigator.pop(context);
     }
   }
