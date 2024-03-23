@@ -77,15 +77,16 @@ class AddCategoryScreenState extends State<AddCategoryScreen> {
                   height: 120,
                   width: 240,
                   decoration: BoxDecoration(
-                    border: Border.all(color: backgroundColor),
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    border: Border.all(color: greenColor),
                   ),
                   child: imageUrl.isEmpty
                       ? IconButton(
                           onPressed: _uploadImage,
-                          icon: const Icon(
+                          icon: Icon(
                             Icons.photo,
                             size: 55,
-                            color: Colors.blue,
+                            color: greenColor,
                           ),
                         )
                       : Image.network(

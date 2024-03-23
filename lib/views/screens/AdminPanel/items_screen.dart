@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:euro_wings/constants/colors.dart';
 import 'package:euro_wings/views/custom_widgets/widgets/utils/utils.dart';
 import 'package:euro_wings/views/screens/AdminPanel/add_item_screen.dart';
@@ -20,6 +21,7 @@ class AdminHomeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: whiteColor,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text(
           'Categories',
           style: TextStyle(color: greenColor),
@@ -86,9 +88,17 @@ class AdminHomeScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
-                        child: Image.network(
-                          category.get('image'),
+                        child: CachedNetworkImage(
+                          imageUrl: category.get('image'),
                           fit: BoxFit.cover,
+                          placeholder: (context, url) => Center(
+                            child: CircularProgressIndicator(
+                              strokeWidth: 4.0,
+                              color: greenColor,
+                            ),
+                          ), // Placeholder widget while loading
+                          errorWidget: (context, url, error) => const Icon(Icons
+                              .error), // Widget to display in case of error
                         ),
                       ),
                       Container(

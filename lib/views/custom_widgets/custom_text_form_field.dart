@@ -10,10 +10,12 @@ class CustomTextFormField extends StatelessWidget {
   final String? Function(String?)? validator;
   String hintText;
   String labelText;
+  int? maxline;
   bool obscure;
   final onTap;
   CustomTextFormField({
     super.key,
+    this.maxline,
     required this.controller,
     required this.prefixIcon,
     this.keyboardType,
@@ -27,6 +29,7 @@ class CustomTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      maxLines: maxline,
       keyboardType: keyboardType,
       controller: controller,
       onTap: onTap,
@@ -35,7 +38,7 @@ class CustomTextFormField extends StatelessWidget {
       decoration: InputDecoration(
         labelText: labelText,
         prefixIcon: prefixIcon,
-        // hintText: hintText,
+        hintText: hintText,
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: greenColor),
           borderRadius: BorderRadius.circular(20),

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:euro_wings/constants/colors.dart';
+import 'package:euro_wings/views/custom_widgets/custom_text_form_field.dart';
 import 'package:euro_wings/views/custom_widgets/widgets/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -77,15 +78,16 @@ class _AddItemScreenState extends State<AddItemScreen> {
                   height: 120,
                   width: 240,
                   decoration: BoxDecoration(
-                    border: Border.all(color: backgroundColor),
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    border: Border.all(color: greenColor),
                   ),
                   child: imageUrl.isEmpty
                       ? IconButton(
                           onPressed: _uploadImage,
-                          icon: const Icon(
+                          icon: Icon(
                             Icons.photo,
                             size: 55,
-                            color: Colors.blue,
+                            color: greenColor,
                           ),
                         )
                       : Image.network(
@@ -101,7 +103,9 @@ class _AddItemScreenState extends State<AddItemScreen> {
                   stream: _categoriesReference.snapshots(),
                   builder: (context, snapshot) {
                     if (!snapshot.hasData) {
-                      return const CircularProgressIndicator();
+                      return CircularProgressIndicator(
+                        color: greenColor,
+                      );
                     }
 
                     var categories = snapshot.data!.docs;
@@ -124,11 +128,23 @@ class _AddItemScreenState extends State<AddItemScreen> {
                         );
                       }).toList(),
                       decoration: InputDecoration(
-                        fillColor: greenColor,
-                        border: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                        ),
                         labelText: 'Select Category',
+                        prefixIcon: Icon(
+                          Icons.category_outlined,
+                          color: greenColor,
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: greenColor),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: greenColor),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(color: greenColor),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
                       ),
                       validator: (String? value) {
                         if (value == null || value.isEmpty) {
@@ -142,56 +158,59 @@ class _AddItemScreenState extends State<AddItemScreen> {
                 const SizedBox(
                   height: 18,
                 ),
-                TextFormField(
+                CustomTextFormField(
                   controller: _controllerName,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                    ),
-                    labelText: 'Enter the name of the item',
-                  ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter the item name';
                     }
                     return null;
                   },
+                  prefixIcon: Icon(
+                    Icons.text_snippet_outlined,
+                    color: greenColor,
+                  ),
+                  labelText: 'Item Name',
+                  hintText: 'Enter the name of the item',
                 ),
+
                 const SizedBox(
                   height: 18,
                 ),
-                TextFormField(
+                CustomTextFormField(
                   controller: _controllerPrice,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                    ),
-                    labelText: 'Enter the price of the item',
-                  ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter the item price';
                     }
                     return null;
                   },
+                  prefixIcon: Icon(
+                    Icons.price_check_outlined,
+                    color: greenColor,
+                  ),
+                  labelText: 'Item Price',
+                  hintText: 'Enter the price of the item',
                 ),
+
                 const SizedBox(
                   height: 18,
                 ),
-                TextFormField(
+                CustomTextFormField(
                   controller: _controllerDesc,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                    ),
-                    labelText: 'Enter the description of the item',
-                  ),
+                  maxline: 3,
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter the item description';
                     }
                     return null;
                   },
+                  prefixIcon: Icon(
+                    Icons.description_outlined,
+                    color: greenColor,
+                  ),
+                  labelText: 'Enter Description',
+                  hintText: 'Enter the description of the item',
                 ),
                 const SizedBox(
                   height: 18,

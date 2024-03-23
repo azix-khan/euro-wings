@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:euro_wings/constants/colors.dart';
 import 'package:euro_wings/views/custom_widgets/custom_text_form_field.dart';
@@ -72,7 +73,7 @@ class UpdateItemScreenState extends State<UpdateItemScreen> {
                     if (imageUrl.isNotEmpty)
                       CircleAvatar(
                         radius: 100.0,
-                        backgroundImage: NetworkImage(imageUrl),
+                        backgroundImage: CachedNetworkImageProvider(imageUrl),
                       ),
                     Positioned(
                       top: 0,
@@ -141,6 +142,7 @@ class UpdateItemScreenState extends State<UpdateItemScreen> {
                   height: 18,
                 ),
                 CustomTextFormField(
+                  maxline: 3,
                   controller: _controllerDesc,
                   prefixIcon: Icon(
                     Icons.description_outlined,

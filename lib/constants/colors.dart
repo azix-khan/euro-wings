@@ -8,6 +8,7 @@ Color greyColor = const Color(0xffC3C3C3);
 Color blackColor = const Color(0xff0f1410);
 Color orangeColor = const Color(0xffFE8800);
 Color blueColor = const Color(0xff3B94C5);
+Color redColor = const Color(0xffd11a2a);
 
 // linerar gredient sky and white
 

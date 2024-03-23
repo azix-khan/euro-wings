@@ -130,6 +130,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   // password form field
                   CustomTextFormField(
                     controller: passwordController,
+                    maxline: 1,
                     obscure: true,
                     validator: (value) {
                       if (value!.isEmpty) {

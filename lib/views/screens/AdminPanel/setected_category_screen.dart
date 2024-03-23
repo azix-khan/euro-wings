@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:euro_wings/constants/colors.dart';
 import 'package:euro_wings/views/screens/AdminPanel/items_details_screen.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,17 @@ class SelectedCategoryScreen extends StatelessWidget {
           Expanded(
             child: Container(
               height: 200,
-              child: Image.network(categoryImage),
+              child: CachedNetworkImage(
+                imageUrl: categoryImage,
+                placeholder: (context, url) => Center(
+                  child: CircularProgressIndicator(
+                    strokeWidth: 4.0,
+                    color: greenColor,
+                  ),
+                ), // Placeholder while loading
+                errorWidget: (context, url, error) =>
+                    const Icon(Icons.error), // in case of error
+              ),
             ),
           ),
           Container(
@@ -55,7 +66,7 @@ class SelectedCategoryScreen extends StatelessWidget {
           .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator(color: orangeColor));
+          return Center(child: CircularProgressIndicator(color: greenColor));
         }
 
         if (snapshot.hasError) {
@@ -72,9 +83,29 @@ class SelectedCategoryScreen extends StatelessWidget {
               elevation: 5,
               margin: const EdgeInsets.all(10.0),
               child: ListTile(
-                title: Text(item['name'] as String? ?? ''),
-                subtitle: Text(item['description'] as String? ?? ''),
-                trailing: Text('\$${item['price'] as String? ?? ''}'),
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(width: 2, color: whiteColor),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                tileColor: greenColor,
+                textColor: whiteColor,
+                title: Text(
+                  item['name'] as String? ?? '',
+                  style: TextStyle(
+                    fontSize: 22,
+                    color: blackColor,
+                  ),
+                ),
+                subtitle: Text(
+                  item['description'] as String? ?? '',
+                  style: const TextStyle(
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                trailing: Text(
+                  'Rs ${item['price'] as String? ?? ''}',
+                  style: TextStyle(fontSize: 22, color: whiteColor),
+                ),
                 onTap: () {
                   Navigator.push(
                     context,

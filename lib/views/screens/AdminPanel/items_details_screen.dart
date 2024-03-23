@@ -1,5 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:euro_wings/constants/colors.dart';
 import 'package:euro_wings/views/custom_widgets/widgets/utils/utils.dart';
 import 'package:euro_wings/views/screens/AdminPanel/update_item_screen.dart';
@@ -30,6 +31,12 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
     return Scaffold(
       backgroundColor: whiteColor,
       appBar: AppBar(
+        leading: InkWell(
+          onTap: () {
+            Navigator.of(context).pop();
+          },
+          child: const Icon(Icons.arrow_back_ios_new),
+        ),
         title: Text(
           'Item Details',
           style: TextStyle(color: greenColor),
@@ -43,7 +50,11 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
             .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
-            return const CircularProgressIndicator();
+            return Center(
+              child: CircularProgressIndicator(
+                color: greenColor,
+              ),
+            );
           }
 
           var itemData = snapshot.data!.data() as Map<String, dynamic>? ?? {};
@@ -60,15 +71,23 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
               SizedBox(
                 height: 200,
                 child: itemImage.isNotEmpty
-                    ? Image.network(
-                        itemImage,
+                    ? CachedNetworkImage(
+                        imageUrl: itemImage,
                         fit: BoxFit.cover,
+                        placeholder: (context, url) => Center(
+                          child: CircularProgressIndicator(
+                            color: greenColor,
+                            strokeWidth: 4.0,
+                          ),
+                        ), // Placeholder while loading
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error), //in case of error
                       )
-                    : const Placeholder(
+                    : Placeholder(
                         color: Colors.green,
                         child: Icon(
-                          Icons.delete_forever,
-                          color: Colors.red,
+                          Icons.check_circle_outline,
+                          color: blueColor,
                           size: 70,
                         ),
                       ),
@@ -108,6 +127,9 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: blueColor,
+                    ),
                     onPressed: () {
                       // update item function
                       // Navigate to the update item screen
@@ -127,14 +149,20 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
                         ),
                       );
                     },
-                    child: const Text('Update Item'),
+                    child: Text(
+                      'Update Item',
+                      style: TextStyle(color: whiteColor),
+                    ),
                   ),
                   ElevatedButton(
                     onPressed: _deleteItem,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red,
+                      backgroundColor: redColor,
                     ),
-                    child: const Text('Delete Item'),
+                    child: Text(
+                      'Delete Item',
+                      style: TextStyle(color: whiteColor),
+                    ),
                   ),
                 ],
               ),
@@ -152,21 +180,32 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Confirm Delete'),
+          surfaceTintColor: whiteColor,
+          backgroundColor: whiteColor,
+          title: Text(
+            'Confirm Delete',
+            style: TextStyle(color: blueColor),
+          ),
           content: const Text('Are you sure you want to delete this item?'),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(false);
               },
-              child: const Text('Cancel'),
+              child: Text(
+                'Cancel',
+                style: TextStyle(color: greenColor),
+              ),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(true);
                 Utils().toastMessage("Item deleted");
               },
-              child: const Text('Delete'),
+              child: Text(
+                'Delete',
+                style: TextStyle(color: redColor),
+              ),
             ),
           ],
         );
