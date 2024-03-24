@@ -215,35 +215,64 @@ class _AddItemScreenState extends State<AddItemScreen> {
                 const SizedBox(
                   height: 18,
                 ),
-                // ElevatedButton(
-                //   onPressed: () async {
-                //     if (imageUrl.isEmpty) {
-                //       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                //           content: Text('Please upload an image')));
-                //       return;
-                //     }
-
-                //     if (key.currentState!.validate()) {
-                //       String itemName = _controllerName.text;
-                //       String itemPrice = _controllerPrice.text;
-                //       String itemdesc = _controllerDesc.text;
-
-                //       // Add the item to the 'items' subcollection of the selected category
-                //       await _categoriesReference
-                //           .doc(selectedCategory)
-                //           .collection('items')
-                //           .add({
-                //         'name': itemName,
-                //         'price': itemPrice,
-                //         'description': itemdesc,
-                //         'image': imageUrl,
-                //       });
-                //       Utils().toastMessage("Item added in ${selectedCategory}");
-
-                //       Navigator.of(context).pop();
-                //     }
-                //   },
-                //   child: const Text('Add Item'),
+                // add prices for S,M,L pizza
+                // Container(
+                //   padding: const EdgeInsets.all(10),
+                //   color: Colors.grey[200],
+                //   child: const Column(
+                //     crossAxisAlignment: CrossAxisAlignment.start,
+                //     children: [
+                //       Text(
+                //         'Prices:',
+                //         style: TextStyle(
+                //           fontWeight: FontWeight.bold,
+                //           fontSize: 16,
+                //         ),
+                //       ),
+                //       Row(
+                //         children: [
+                //           Expanded(
+                //             child: TextField(
+                //               // controller: smallPriceController,
+                //               decoration: InputDecoration(
+                //                 labelText: 'Small',
+                //                 prefixText: 'RS - ',
+                //               ),
+                //               keyboardType: TextInputType.numberWithOptions(
+                //                   decimal: true),
+                //             ),
+                //           ),
+                //           SizedBox(width: 10),
+                //           Expanded(
+                //             child: TextField(
+                //               // controller: mediumPriceController,
+                //               decoration: InputDecoration(
+                //                 labelText: 'Medium',
+                //                 prefixText: 'RS - ',
+                //               ),
+                //               keyboardType: TextInputType.numberWithOptions(
+                //                   decimal: true),
+                //             ),
+                //           ),
+                //           SizedBox(width: 10),
+                //           Expanded(
+                //             child: TextField(
+                //               // controller: largePriceController,
+                //               decoration: InputDecoration(
+                //                 labelText: 'Large',
+                //                 prefixText: 'RS - ',
+                //               ),
+                //               keyboardType: TextInputType.numberWithOptions(
+                //                   decimal: true),
+                //             ),
+                //           ),
+                //         ],
+                //       ),
+                //     ],
+                //   ),
+                // ),
+                // const SizedBox(
+                //   height: 18,
                 // ),
                 RoundButton(
                   loading: loading,
